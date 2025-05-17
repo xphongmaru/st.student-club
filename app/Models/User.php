@@ -55,12 +55,21 @@ class User extends Authenticatable
 
     public function likes():BelongsToMany
     {
-        return $this->belongsToMany(Club::class, 'like');
+        return $this->belongsToMany(Club::class, 'likes')
+            ->withPivot('user_id', 'club_id')
+            ->withTimestamps();
     }
 
     public function followers():BelongsToMany
     {
-        return $this->belongsToMany(Club::class, 'follower');
+        return $this->belongsToMany(Club::class, 'followers')
+            ->withPivot('user_id', 'club_id')
+            ->withTimestamps();
+    }
+
+    public function notifications():HasMany
+    {
+        return $this->hasMany(Notification::class, 'user_id');
     }
 
     public function posts():HasMany

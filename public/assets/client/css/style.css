@@ -8639,7 +8639,7 @@ xclip
 }
 
 .mainmenu-nav .mainmenu li.has-droupdown .submenu {
-    min-width: 260px;
+    min-width: 400px;
     height: auto;
     position: absolute;
     top: 90%;

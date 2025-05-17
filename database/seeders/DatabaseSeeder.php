@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             Role\PermissionSeeder::class,
             Role\RoleSeeder::class,
             FacultySeeder::class,
+            IconSeeder::class,
         ]);
     }
 }

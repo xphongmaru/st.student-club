@@ -43,5 +43,19 @@ class PermissionSeeder extends Seeder
                 'created_at' => now(),
             ]);
         }
+
+        if (!DB::table('permission_clubs')->where('name', 'Quản lý bài viết')->exists()) {
+            DB::table('permission_clubs')->insert([
+                'name' => 'Quản lý bài viết',
+                'created_at' => now(),
+            ]);
+        }
+
+        if (!DB::table('permission_clubs')->where('name', 'Tạo bài viết mới')->exists()) {
+            DB::table('permission_clubs')->insert([
+                'name' => 'Tạo bài viết mới',
+                'created_at' => now(),
+            ]);
+        }
     }
 }

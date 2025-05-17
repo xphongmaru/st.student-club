@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\Club;
 use App\Enums\StatusRequestClub;
+use App\Models\Notification;
 
 class ModalInviteMember extends Component
 {
@@ -66,6 +67,19 @@ class ModalInviteMember extends Component
             'message' => $this->content,
             'created_at' => now(),
         ]);
+
+        //gửi thông báo đến người dùng
+        Notification::create([
+            'user_id' => $user->id,
+            'club_id' => $club->id,
+            'title' => 'Bạn đã nhận được lời mời tham gia câu lạc bộ '.$club->name,
+            'type' => 'invite',
+            'content' => $this->content,
+            'status' => StatusRequestClub::Approved,
+            'is_read' => false,
+            'url' => route('client.account',['item'=>5]),
+            'created_at' => now(),
+        ]);
         $this->content='Chúng tôi rất vui được mời bạn tham gia Câu lạc bộ';
         $this->dispatch('flashMessage',type:'success', message: 'Đã gửi lời mời thành công');
     }
@@ -78,6 +92,18 @@ class ModalInviteMember extends Component
         $club->clubInviteUsers()->attach($user->id, [
             'status' => StatusRequestClub::Pending->value,
             'message' => $this->content,
+            'created_at' => now(),
+        ]);
+        //gửi thông báo đến người dùng
+        Notification::create([
+            'user_id' => $user->id,
+            'club_id' => $club->id,
+            'title' => 'Bạn đã nhận được lời mời tham gia câu lạc bộ '.$club->name,
+            'type' => 'invite',
+            'content' => $this->content,
+            'status' => StatusRequestClub::Approved,
+            'is_read' => false,
+            'url' => route('client.account',['item'=>5]),
             'created_at' => now(),
         ]);
         $this->content='Chúng tôi rất vui được mời bạn tham gia Câu lạc bộ';

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Club extends Model
 {
@@ -54,12 +55,16 @@ class Club extends Model
 
     public function likes(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'like');
+        return $this->belongsToMany(User::class, 'likes')
+            ->withPivot('user_id', 'club_id')
+            ->withTimestamps();
     }
 
     public function followers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'follower');
+        return $this->belongsToMany(User::class, 'followers')
+            ->withPivot('user_id', 'club_id')
+            ->withTimestamps();
     }
 
     public function categoryPosts(): HasMany
@@ -75,6 +80,11 @@ class Club extends Model
     public function events(): HasMany
     {
         return $this->hasMany(Event::class, 'club_id');
+    }
+
+    public function notification():HasMany
+    {
+        return $this->hasMany(Notification::class, 'club_id');
     }
 
     public function recruitmentClubs(): HasMany

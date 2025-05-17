@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Client\Index;
 
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use App\Models\RequestClub as RequestClubModel;
@@ -21,13 +22,44 @@ class FormRequestClub extends Component
     #[Validate(as: 'Mô tả câu lạc bộ')]
     public $description;
 
+    #[Validate(as:'Mã bảo mật ')]
+    public string $captcha = '';
+    public string $captchaImage;
+
     public function render()
     {
         return view('livewire.client.index.form-request-club');
     }
 
+    public function mount()
+    {
+        $this->generateCaptcha();
+    }
+
+    public function generateCaptcha(): void
+    {
+        $this->captchaImage = captcha_src('numeric') . '?' . rand();
+    }
+
     public function store(){
+        if(!Auth::check()){
+            $this->dispatch('flashMessage', type: 'error', message: 'Bạn cần đăng nhập tài khoản để đăng câu lạc bộ');
+            return;
+        }
         $this->validate();
+
+        $validator = Validator::make(
+            ['captcha' => $this->captcha],
+            ['captcha' => 'required|captcha'],
+            ['captcha.required' => 'Vui lòng nhập mã xác thực', 'captcha.captcha' => 'Mã xác thực không đúng']
+        );
+
+        if ($validator->fails()) {
+            $this->addError('captcha', $validator->errors()->first('captcha'));
+            $this->dispatch('flashMessage', type: 'warning', message: $validator->errors()->first('captcha'));
+            $this->generateCaptcha();
+            return;
+        }
 
         if(!Auth::check()){
             $this->dispatch('flashMessage', type: 'error', message: 'Bạn cần đăng nhập tài khoản để đăng câu lạc bộ');
@@ -46,7 +78,8 @@ class FormRequestClub extends Component
             'status' => StatusRequestClub::Pending,
         ]);
         $this->dispatch('flashMessage', type: 'success', message: 'Đăng ký CLB thành công');
-        $this->reset(['name', 'field', 'thumbnail', 'description']);
+        $this->reset(['name', 'field', 'thumbnail', 'description','captcha']);
+        $this->generateCaptcha();
         $this->dispatch('closeModal');
     }
 
@@ -62,6 +95,7 @@ class FormRequestClub extends Component
             'field' => 'required|string|max:255',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required|string|max:1000',
+            'captcha' => 'required',
         ];
     }
 

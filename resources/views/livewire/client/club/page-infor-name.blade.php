@@ -82,17 +82,17 @@
                         </div>
 {{--                    </div>--}}
                     <div class="count-famous">
-                        <button class="btn btn-default btn-icon me-3">
-                            <span>Thích
+                        <button class="btn btn-default btn-icon me-3" wire:click="handleLike">
+                            <span>@if($liked) Đã thích @else Thích @endif
                                 <span class="icon">
                                     <i class="fa fa-thumbs-o-up"></i>
                                     </span>
                                 </span>
                         </button>
-                        <button class="btn btn-default btn-icon ms-3">
-                            <span>Theo dõi
+                        <button class="btn btn-default btn-icon ms-3" wire:click="handleFollow">
+                            <span> @if($followed) Đang theo dõi @else Theo dõi @endif
                                 <span class="icon">
-                                    <i class='fa fa-user-plus'></i>
+                                        @if($followed) <i class='fa fa-bell'></i> @else <i class='fa fa-user-plus'></i> @endif
                                     </span>
                                 </span>
                         </button>

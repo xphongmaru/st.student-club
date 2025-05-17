@@ -6,7 +6,7 @@
         <div class="quick-veiw-area">
             <div class="px-5 pt-3 pb-5">
                 <form class="contact-form-1 rainbow-dynamic-form" id="contact-form" wire:submit="changeInfo">
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0px 30px;">
+                    <div class="account-content">
                         <div class="form-group">
                             <label class="mb-2">Họ và tên:</label>
                             <input type="text" name="fullName" placeholder="Nhập vào họ và tên" value="{{$user->full_name}}" readonly>

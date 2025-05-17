@@ -9,6 +9,7 @@ use App\Models\Club;
 class PageInforName extends Component
 {
     use \Livewire\WithFileUploads;
+    protected $listeners = ['refreshPage'=>'refreshPage'];
 
     public $clubId;
     public $club;
@@ -18,8 +19,17 @@ class PageInforName extends Component
 
     public function render()
     {
+        $liked = false;
+        $followed = false;
+        if(auth()->check()) {
+            $liked = $this->club->likes()->where('user_id', auth()->user()->id)->exists();
+            $followed = $this->club->followers()->where('user_id', auth()->user()->id)->exists();
+        }
+
         return view('livewire.client.club.page-infor-name',[
             'club' => $this->club,
+            'liked' => $liked,
+            'followed' => $followed,
         ]);
     }
 
@@ -84,6 +94,54 @@ class PageInforName extends Component
         $this->thumbnail = null;
         $this->dispatch('flashMessage', type: 'success', message: 'Cập nhật logo câu lạc bộ thành công');
 
+    }
+
+    public function handleLike()
+    {
+        if(!auth()->check()) {
+            $this->dispatch('flashMessage', type: 'warning', message: 'Vui lòng đăng nhập để thực hiện hành động này');
+            return;
+        }
+        $liked = $this->club->likes()->where('user_id', auth()->user()->id)->exists();
+
+        if ($liked) {
+            $this->club->likes()->detach(auth()->user()->id);
+            $this->club->likes_count--;
+            $this->club->save();
+            $this->dispatch('flashMessage', type: 'warning', message: 'Bạn đã bỏ thích câu lạc bộ này');
+        } else {
+            $this->club->likes()->attach(auth()->user()->id);
+            $this->club->likes_count++;
+            $this->club->save();
+            $this->dispatch('flashMessage', type: 'success', message: 'Bạn đã thích câu lạc bộ này');
+        }
+    }
+
+    public function handleFollow()
+    {
+        if(!auth()->check()) {
+            $this->dispatch('flashMessage', type: 'warning', message: 'Vui lòng đăng nhập để thực hiện hành động này');
+            return;
+        }
+        $followed = $this->club->followers()->where('user_id', auth()->user()->id)->exists();
+        if ($followed) {
+            $this->club->followers()->detach(auth()->user()->id);
+            $this->club->followers_count--;
+            $this->club->save();
+            $this->dispatch('flashMessage', type: 'warning', message: 'Bạn đã bỏ theo dõi câu lạc bộ này');
+        } else {
+            $this->club->followers()->attach(auth()->user()->id);
+            $this->club->followers_count++;
+            $this->club->save();
+            $this->dispatch('flashMessage', type: 'success', message: 'Bạn đã theo dõi câu lạc bộ này');
+        }
+    }
+
+
+
+    public function refreshPage()
+    {
+        $this->render();
     }
 
 }

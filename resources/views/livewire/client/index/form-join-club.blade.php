@@ -14,6 +14,7 @@
                 </div>
             @endif
             <form class="contact-form-1 rainbow-dynamic-form" wire:submit.prevent="submit" >
+                @csrf
                 <div class="form-group" wire:ignore>
                     <label class="mb-2"> Tên câu lạc bộ: <span>*</span></label>
                     <select wire:model="club_id" name="club_id" id="selectCLB" class="select2" onchange="@this.set('club_id', this.value)">
@@ -38,12 +39,13 @@
                         <span class="text-danger">{{ $errors->first('code') }}</span>
                     @endif
                 </div>
-                <div class="form-group d-flex">
-                    <label class="mb-2 me-3" style="line-height: 50px"> Giới tính: <span>*</span></label>
-                    <div class="radio-inputs">
-                        <label class="me-3">
-                            <input class="radio-input" type="radio" name="gender" wire:model.live="gender" value="Nam">
-                            <span class="radio-tile">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-2 me-3" style="line-height: 50px"> Giới tính: <span>*</span></label>
+                        <div class="radio-inputs">
+                            <label class="me-3">
+                                <input class="radio-input" type="radio" name="gender" wire:model.live="gender" value="Nam">
+                                <span class="radio-tile">
                                             <span class="radio-icon">
                                             <svg viewBox="0 0 100000 100000" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" image-rendering="optimizeQuality" clip-rule="evenodd" fill-rule="evenodd" class="h-8 w-8 fill-current peer-checked:fill-blue-500" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M35927 32903c412,2646 927,5119 1312,6767 -1320,-1159 -6849,-6682 -6569,-1799 342,5954 5284,6851 5297,6853l826 176 0 841c0,18 -115,6164 5054,8983 2585,1411 5371,2117 8155,2117 2783,0 5567,-706 8152,-2117 5169,-2819 5054,-8965 5054,-8983l0 -841 826 -176c13,-2 4955,-899 5297,-6853 273,-4760 -5035,428 -6400,1585 466,-2425 1265,-6640 1627,-10534 -707,-1139 -1761,-2058 -3310,-2445 -5841,-1459 -12802,2359 -14487,-898 -1685,-3256 -4043,-5728 -4043,-5728 0,0 -1461,5389 -4266,7749 -1302,1095 -2073,3278 -2525,5303zm7891 26143c0,0 -2213,3386 -2734,5600 -521,2213 -16015,783 -16407,9375 -392,8593 -391,16666 -391,16666l51429 0c0,0 1,-8073 -391,-16666 -392,-8592 -15886,-7162 -16407,-9375 -520,-2214 -2734,-5600 -2734,-5600 89,59 -103,-469 -339,-1065 1123,-370 2228,-847 3303,-1433 5035,-2746 5946,-8013 6109,-10011 1747,-593 5810,-2604 6152,-8552 329,-5738 -2626,-5167 -4942,-3884 588,-3342 1229,-9312 59,-16047 -1797,-10330 -8310,-7860 -13363,-8645 -5054,-786 -11791,3480 -11791,3480 0,0 -6064,-785 -8872,4717 -1830,3589 -79,10904 1361,15557l178 1232c-2363,-1457 -5799,-2573 -5444,3590 341,5948 4404,7959 6151,8552 163,1998 1075,7265 6110,10011 1074,586 2179,1063 3302,1433 -236,596 -428,1124 -339,1065zm11413 -875c37,1566 129,3813 367,5042 391,2019 -326,4297 -326,4297l-5271 5389 -5272 -5389c0,0 -717,-2278 -326,-4297 238,-1229 330,-3475 367,-5042 1719,502 3476,753 5232,753 1755,0 3511,-251 5229,-753z"></path>
@@ -51,10 +53,10 @@
                                             </span>
                                         <span class="radio-label">Nam</span>
                                         </span>
-                        </label>
-                        <label>
-                            <input class="radio-input" type="radio" name="gender" wire:model.live="gender" value="Nữ">
-                            <span class="radio-tile">
+                            </label>
+                            <label>
+                                <input class="radio-input" type="radio" name="gender" wire:model.live="gender" value="Nữ">
+                                <span class="radio-tile">
                                                 <span class="radio-icon">
                                                     <svg id="female" viewBox="0 0 128 128" class="h-7 w-6 fill-gray-100" xmlns="http://www.w3.org/2000/svg">
                                                       <path d="M64,72.7c0,0,0-0.1,0-0.1c0,0,0,0,0,0V72.7z" fill="#000"></path>
@@ -64,8 +66,12 @@
                                                 </span>
                                                 <span class="radio-label">Nữ</span>
                                             </span>
-                        </label>
+                            </label>
+                        </div>
                     </div>
+                    @if ($errors->has('gender'))
+                        <span class="text-danger">{{ $errors->first('gender') }}</span>
+                    @endif
                 </div>
                 <div class="form-group" wire:ignore>
                     <label class="mb-2"> Tên khoa: <span>*</span></label>
@@ -113,6 +119,19 @@
                     @if ($errors->has('reason'))
                         <span class="text-danger">{{ $errors->first('reason') }}</span>
                     @endif
+                </div>
+                <div class="form-group">
+                    <label class="mb-2">Nhập mã bảo mật: <span>*</span></label>
+                    <div>
+                        <img src="{{ $captchaImage }}"  class="cursor-pointer" />
+                        <a wire:click="generateCaptcha" class="btn-default btn-small rainbow-btn ms-4" style="font-size: 20px" title="Click để đổi mã" >
+                            <i class='fa fa-refresh'></i>
+                        </a>
+                    </div>
+                    <div>
+                        <input type="text" wire:model.live="captcha" placeholder="Nhập mã bảo mật" class="mt-3" />
+                        @error('captcha') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
                 </div>
                 <div class="form-group d-flex justify-content-center">
                     <button name="submit" type="submit" id="submit" class="btn-default btn-small  rainbow-btn">

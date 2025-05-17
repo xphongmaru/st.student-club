@@ -30,22 +30,27 @@
                 <div class="sidebar_content mt-3">
                     <ul class="list_item mt-3">
                         <li class="item">
-                            <a class="toggle-link active" id="item1" data-bs-toggle="collapse" href="#collapseProfile" aria-expanded="false">
+                            <a class="toggle-link @if($item==1) active @endif" id="item1" data-bs-toggle="collapse" href="#collapseProfile" aria-expanded="false">
                                 Thông tin tài khoản
                             </a>
                         </li>
                         <li class="item">
-                            <a class="toggle-link" id="item2" data-bs-toggle="collapse" href="#ListClubYouJoin" aria-expanded="false">
+                            <a class="toggle-link @if($item==2) active @endif" id="item2" data-bs-toggle="collapse" href="#collapseNotification" aria-expanded="false">
+                                Thông báo
+                            </a>
+                        </li>
+                        <li class="item">
+                            <a class="toggle-link @if($item==3) active @endif" id="item3" data-bs-toggle="collapse" href="#ListClubYouJoin" aria-expanded="false">
                                 CLB bạn tham gia
                             </a>
                         </li>
                         <li class="item">
-                            <a class="toggle-link" id="item3" data-bs-toggle="collapse" href="#RequetsClub" aria-expanded="false">
+                            <a class="toggle-link @if($item==4) active @endif" id="item4" data-bs-toggle="collapse" href="#RequetsClub" aria-expanded="false">
                                 Đăng ký CLB
                             </a>
                         </li>
                         <li class="item">
-                            <a class="toggle-link" id="item4" data-bs-toggle="collapse" href="#ClubInviteMember" aria-expanded="false">
+                            <a class="toggle-link @if($item==5) active @endif" id="item5" data-bs-toggle="collapse" href="#ClubInviteMember" aria-expanded="false">
                                 Lời mời tham gia CLB
                             </a>
                         </li>
@@ -60,16 +65,19 @@
             <div class="content">
                 <!-- Nhóm các phần tử collapse vào một div có id="accordion" -->
                 <div id="accordion">
-                    <div id="collapseProfile" class="collapse show" data-bs-parent="#accordion">
+                    <div id="collapseProfile" class="collapse @if($item==1) show @endif" data-bs-parent="#accordion">
                         <livewire:client.account.infor-user/>
                     </div>
-                    <div id="ListClubYouJoin" class="collapse" data-bs-parent="#accordion">
+                    <div id="collapseNotification" class="collapse @if($item==2) show @endif" data-bs-parent="#accordion">
+                        <livewire:client.account.notification/>
+                    </div>
+                    <div id="ListClubYouJoin" class="collapse @if($item==3) show @endif" data-bs-parent="#accordion">
                         <livewire:client.account.club-joined/>
                     </div>
-                    <div id="RequetsClub" class="collapse" data-bs-parent="#accordion">
+                    <div id="RequetsClub" class="collapse @if($item==4) show @endif" data-bs-parent="#accordion">
                         <livewire:client.account.request-club/>
                     </div>
-                    <div id="ClubInviteMember" class="collapse" data-bs-parent="#accordion">
+                    <div id="ClubInviteMember" class="collapse @if($item==5) show @endif" data-bs-parent="#accordion">
                         <livewire:client.account.club-invite-member/>
                     </div>
                 </div>

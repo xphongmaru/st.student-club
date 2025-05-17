@@ -3,7 +3,7 @@
         <div class="title">
             <span class="ps-3"> Danh sách đơn đăng ký CLB  </span>
         </div>
-        <div>
+        <div class="table-responsive">
             @if($requestClubs->isEmpty())
                 <div class="text-center">
                     <img src="{{ asset('assets/admin/images/empty.png') }}" alt="Không tìm thấy kết quả" style="width: 400px;" />
