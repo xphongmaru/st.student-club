@@ -62,6 +62,17 @@
                             <span class="text-danger">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
+                    {{--liên kết--}}
+                    <div class="form-group">
+                        <label class="mb-2">Các trang web và liên kết mạng xã hội:</label>
+                        <a wire:click="addComponent" class="btn-default btn-small btn-add-link rainbow-btn">
+                            <span>Thêm</span>
+                        </a>
+                        @foreach($components as $index)
+                            <livewire:client.club.cpn-link-web :key="$index" :id="$index" :club="$club"/>
+                        @endforeach
+
+                    </div>
                     <div class="form-group d-flex justify-content-center">
                         <button name="submit" type="submit" id="submit" class="btn-default btn-small  rainbow-btn">
                             <span>Cập nhật</span>

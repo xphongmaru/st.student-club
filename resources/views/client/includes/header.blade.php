@@ -2,7 +2,7 @@
 <header class="rainbow-header header-default header-left-align header-transparent header-sticky">
     <div class="container position-relative">
         <div class="row align-items-center">
-            <div class="col-lg-9 col-md-6 col-4 position-static">
+            <div class="col-lg-9 col-md-6 col-2 position-static">
                 <div class="header-left d-flex">
                     <div class="logo">
                         <a href="{{route('client.index')}}">
@@ -14,18 +14,20 @@
                         <ul class="mainmenu">
                             <li><a href="{{route('client.index')}}">Trang chủ</a></li>
                             <li><a href="#">Hoạt động</a></li>
-                            <li><a href="#">Thông báo </a></li>
+                            <li class="has-droupdown has-menu-child-item"><a href="#">Thông báo</a>
+                                <livewire:client.header.notification/>
+                            </li>
                             <li><a href="#">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-8">
+            <div class="col-lg-3 col-md-6 col-10">
                 <div class="header-right">
                     <div class="side-wrap user-wrap">
                         <div class="acc-desk d-flex align-items-center">
                             <div class="user-icon">
-                                <a href="@if(Auth()->check()) {{route('client.account')}} @endif" class="user-icon-desk">
+                                <a href="@if(Auth()->check()) {{route('client.account',['item'=>1])}} @endif" class="user-icon-desk">
                                     <span><i class="me-3" style="width: 30px !important;height: 30px !important;" data-feather="user"></i></span>
                                 </a>
 
@@ -111,7 +113,7 @@
             </div>
         </div>
         <ul class="mainmenu">
-            <li><a href="">Trang chủ</a></li>
+            <li><a href="{{route('client.index')}}">Trang chủ</a></li>
             <li><a href="">Hoạt động</a></li>
             <li><a href="">Thông báo</a></li>
             <li><a href="">Liên hệ</a></li>

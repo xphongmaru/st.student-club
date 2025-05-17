@@ -3,13 +3,13 @@
         <div class="title">
             <span class="ps-3"> Danh sách mời bạn tham gia từ các câu lạc bộ </span>
         </div>
-        <div>
+        <div class="table-responsive">
             @if($invites->isEmpty())
                 <div class="text-center">
                     <img src="{{ asset('assets/admin/images/empty.png') }}" alt="Không tìm thấy kết quả" style="width: 400px;" />
                 </div>
             @else
-                <table class="table-content">
+                <table class="table-content d-block">
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 1%">STT</th>

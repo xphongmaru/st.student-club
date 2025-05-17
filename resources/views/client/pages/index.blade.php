@@ -158,7 +158,7 @@
                             <h6 class="subtitle" data-sal="slide-up" data-sal-duration="400" data-sal-delay="300">Đừng bỏ lỡ cơ hội trở thành một phần của cộng đồng sinh viên năng động.</h6>
                             <div class="btn-index d-flex justify-content-center">
                                 <div class="button-group mt--20 mx-3">
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#establish-clb" class="btn-default round">Đăng ký thành lập CLB</a>
+                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#establish-clb" class="btn-default round">Đăng ký quản lý CLB</a>
                                 </div>
                                 <div class="button-group mt--20 mx-3">
                                     <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#join-clb" class="btn-default round">Đăng ký tham gia CLB</a>

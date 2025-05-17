@@ -66,7 +66,7 @@
                                style="display: flex; align-items: center;">
                                 <i class="ph-house-simple me-3 fa"></i>
                                 <span style="display: flex; align-items: center;">
-                                    Danh sách yêu cầu đăng ký CLB
+                                    Danh sách đăng ký quản lý CLB
                                 </span>
                             </a>
                         </li>

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Livewire\Client\Index;
+namespace App\Livewire\Client\Club;
 
+use App\Enums\StatusRequestClub;
+use App\Models\Club;
+use App\Models\Faculty;
+use App\Models\RequestMemberClub;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use \App\Models\Faculty;
-use App\Models\Club;
-use Carbon\Carbon;
 use Livewire\Attributes\Validate;
-use App\Models\RequestMemberClub;
-use App\Enums\StatusRequestClub;
+use Livewire\Component;
 
-class FormJoinClub extends Component
+class ModalJoinClub extends Component
 {
     public $user;
-    public $clubs;
+    public $club;
 
     #[Validate(as:'Họ và tên')]
     public $name;
@@ -34,8 +34,6 @@ class FormJoinClub extends Component
     public $faculties;
     #[Validate(as:'Khoa')]
     public $faculty_id;
-    #[Validate(as:'Câu lạc bộ')]
-    public $club_id;
 
     #[Validate(as:'Điểm mạnh và điểm yếu')]
     public $advantage_and_disadvantage;
@@ -48,10 +46,9 @@ class FormJoinClub extends Component
 
     public function render()
     {
-        return view('livewire.client.index.form-join-club',[
+        return view('livewire.client.club.modal-join-club',[
+            'club' => $this->club,
             'faculties' => $this->faculties,
-            'clubs' => $this->clubs,
-
         ]);
     }
 
@@ -68,16 +65,7 @@ class FormJoinClub extends Component
             $this->gender = $this->user->gender;
         }
 
-        $this->clubs = Club::whereHas('recruitmentClubs', function ($query) {
-            $query->where('start_date', '<=', Carbon::now())
-                ->where('end_date', '>=', Carbon::now());
-        })->get();
         $this->generateCaptcha();
-    }
-
-    public function generateCaptcha(): void
-    {
-        $this->captchaImage = captcha_src('numeric') . '?' . rand();
     }
 
     public function submit(){
@@ -88,16 +76,8 @@ class FormJoinClub extends Component
 
         $this->validate();
 
-        if(($this->faculty_id == 0 || $this->faculty_id == null) && ($this->club_id == 0 || $this->club_id == null)){
-            $this->dispatch('flashMessage', type: 'warning', message: 'Vui lòng chọn chọn câu lạc bộ tham gia và khoa.');
-            return;
-        }
-        elseif($this->faculty_id == 0 || $this->faculty_id == null){
+        if($this->faculty_id == 0 || $this->faculty_id == null){
             $this->dispatch('flashMessage', type: 'warning', message: 'Vui lòng chọn chọn khoa.');
-            return;
-        }
-        elseif($this->club_id == 0 || $this->club_id == null){
-            $this->dispatch('flashMessage', type: 'warning', message: 'Vui lòng chọn chọn câu lạc bộ tham gia.');
             return;
         }
 
@@ -114,18 +94,16 @@ class FormJoinClub extends Component
             return;
         }
 
-        $club = Club::find($this->club_id);
-
         if($this->user == null){
             $this->dispatch('flashMessage', type: 'warning', message: 'Vui lòng đăng nhập để tham gia câu lạc bộ.');
             return;
         }
-        if($this->user->isMemberOfClub($club->id)){
+        if($this->user->isMemberOfClub($this->club->id)){
             $this->dispatch('flashMessage', type: 'warning', message: 'Bạn đã là thành viên của câu lạc bộ này.');
             return;
         }
 
-        $hasRequest = RequestMemberClub::query()->where('club_id', $club->id)->where('user_id',$this->user->id)->exists();
+        $hasRequest = RequestMemberClub::query()->where('club_id', $this->club->id)->where('user_id',$this->user->id)->exists();
 
         if($hasRequest){
             $this->dispatch('flashMessage', type: 'warning', message: 'Bạn đã gửi yêu cầu tham gia câu lạc bộ này.');
@@ -147,11 +125,11 @@ class FormJoinClub extends Component
         }
         $this->user->save();
 
-        $recruitment = $club->recruitmentClubs()->where('start_date', '<=', Carbon::now())
+        $recruitment = $this->club->recruitmentClubs()->where('start_date', '<=', Carbon::now())
             ->where('end_date', '>=', Carbon::now())->first();
         RequestMemberClub::create([
             'recruitment_club_id'=>$recruitment->id,
-            'club_id'=>$club->id,
+            'club_id'=>$this->club->id,
             'user_id'=>$this->user->id,
             'name'=>$this->name,
             'code'=>$this->code,
@@ -171,6 +149,11 @@ class FormJoinClub extends Component
         $this->dispatch('closeModal');
     }
 
+    public function generateCaptcha(): void
+    {
+        $this->captchaImage = captcha_src('numeric') . '?' . rand();
+    }
+
     protected function rules(){
         return [
             'name'=> 'required|string|max:255',
@@ -186,7 +169,4 @@ class FormJoinClub extends Component
             'gender' => 'required|in:Nam,Nữ',
         ];
     }
-
-
-
 }

@@ -4,7 +4,7 @@
             <img src="{{asset('assets\admin\images\logo_vnua.png')}}" alt="">
         </div>
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> Đăng ký câu lạc bộ </h5>
+            <h5 class="modal-title" id="exampleModalLabel"> Đăng ký quản lý câu lạc bộ </h5>
             <a href="javascript:void(0)" data-bs-dismiss="modal" aria-label="Close">X</a>
         </div>
         <div class="quick-veiw-area">
@@ -65,6 +65,19 @@
                         @if ($errors->has('description'))
                             <span class="text-danger">{{ $errors->first('description') }}</span>
                         @endif
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Nhập mã bảo mật: <span>*</span></label>
+                        <div>
+                            <img src="{{ $captchaImage }}"  class="cursor-pointer" />
+                            <a wire:click="generateCaptcha" class="btn-default btn-small rainbow-btn ms-4" style="font-size: 20px" title="Click để đổi mã" >
+                                <i class='fa fa-refresh'></i>
+                            </a>
+                        </div>
+                        <div>
+                            <input type="text" wire:model.live="captcha" placeholder="Nhập mã bảo mật" class="mt-3" />
+                            @error('captcha') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                     </div>
                     <div class="form-group d-flex justify-content-center">
                         <button name="submit" type="submit" id="submit" class="btn-default btn-small  rainbow-btn">

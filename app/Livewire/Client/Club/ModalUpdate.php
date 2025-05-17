@@ -4,9 +4,16 @@ namespace App\Livewire\Client\Club;
 
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use App\Models\Website;
 
 class ModalUpdate extends Component
 {
+    protected $listeners=[
+        'removeCPNLinkWeb'=>'removeCPNLinkWeb',
+        'updateCPNLinkWeb'=>'updateCPNLinkWeb'
+    ];
+
+
     public $club;
     #[Validate(as: 'Slogan')]
     public $slogan;
@@ -26,7 +33,10 @@ class ModalUpdate extends Component
 
     public function render()
     {
-        return view('livewire.client.club.modal-update');
+        $websites= Website::query()->where('club_id',$this->club->id)->get();
+        return view('livewire.client.club.modal-update',[
+            'websites' => $websites,
+        ]);
     }
 
     public function mount($club){
@@ -38,6 +48,21 @@ class ModalUpdate extends Component
         $this->foundation_date = $club->foundation_date;
         $this->phone = $club->phone;
         $this->email = $club->email;
+
+        $websites= Website::query()->where('club_id',$this->club->id)->get();
+        $linkId=0;
+        foreach ($websites as $website){
+            $this->dataLinkWeb[$website->id] = [
+                'icon_id' => $website->icon_id,
+                'url' => $website->url,
+                'club_id' => $this->club->id,
+            ];
+            $this->components[]=$website->id;
+            $linkId=$website->id;
+        }
+
+        $this->nextIndex= $linkId+1;
+
     }
 
     public function store(){
@@ -50,6 +75,24 @@ class ModalUpdate extends Component
         $this->club->phone = $this->phone;
         $this->club->email = $this->email;
         $this->club->save();
+
+        //xoa link web
+        $websites = Website::query()->where('club_id', $this->club->id)->get();
+        foreach ($websites as $website) {
+            if (!isset($this->dataLinkWeb[$website->id])) {
+                $website->delete();
+            }
+        }
+        if (count($this->dataLinkWeb) > 0) {
+            foreach ($this->dataLinkWeb as $item) {
+                Website::updateOrCreate(
+                    ['club_id' => $item['club_id'], 'icon_id' => $item['icon_id']],
+                    ['url' => $item['url']]
+                );
+
+            }
+        }
+
         $this->dispatch('flashMessage', type: 'success', message: 'Cập nhật thông tin câu lạc bộ thành công');
         $this->dispatch('refreshPage');
     }
@@ -58,13 +101,13 @@ class ModalUpdate extends Component
     protected function rules()
     {
         return [
-            'slogan' => 'string|max:255',
+            'slogan' => 'string|max:255|nullable',
             'field' => 'required|string|max:255',
             'description' => 'required|string|max:1024',
-            'address' => 'string|max:255',
+            'address' => 'string|max:255|nullable',
             'foundation_date' => 'date|after:1900-01-01|before:today',
-            'phone' => 'string|regex:/^0[0-9]{9,14}$/',
-            'email' => 'email|max:255',
+            'phone' => 'string|regex:/^0[0-9]{9,14}$/|nullable',
+            'email' => 'email|max:255|nullable',
         ];
     }
 
@@ -73,6 +116,31 @@ class ModalUpdate extends Component
             'foundation_date.date' => 'Ngày thành lập không hợp lệ',
             'foundation_date.after' => 'Ngày thành lập không hợp lệ',
             'foundation_date.before' => 'Ngày thành lập phải là ngày trong quá khứ',
+        ];
+    }
+
+    public array $components = [];
+    public int $nextIndex = 0;
+    public $dataLinkWeb = [];
+
+    public function addComponent()
+    {
+        $this->components[] = $this->nextIndex;
+        $this->nextIndex++;
+    }
+
+    public function removeCPNLinkWeb($id)
+    {
+        $this->components = array_filter($this->components, fn($item) => $item !== $id);
+        unset($this->dataLinkWeb[$id]);
+    }
+
+    public function updateCPNLinkWeb($data)
+    {
+        $this->dataLinkWeb[$data['id']] = [
+            'icon_id' => $data['icon_id'],
+            'url' => $data['url'],
+            'club_id' => $this->club->id,
         ];
     }
 }

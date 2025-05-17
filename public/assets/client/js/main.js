@@ -82,6 +82,7 @@
             $('#item2').removeClass('active');
             $('#item3').removeClass('active');
             $('#item4').removeClass('active');
+            $('#item5').removeClass('active');
         });
 
         $('#item2').click(function() {
@@ -89,6 +90,7 @@
             $('#item1').removeClass('active');
             $('#item3').removeClass('active');
             $('#item4').removeClass('active');
+            $('#item5').removeClass('active');
         });
 
         $('#item3').click(function() {
@@ -96,6 +98,7 @@
             $('#item1').removeClass('active');
             $('#item2').removeClass('active');
             $('#item4').removeClass('active');
+            $('#item5').removeClass('active');
         });
 
         $('#item4').click(function() {
@@ -103,6 +106,14 @@
             $('#item1').removeClass('active');
             $('#item2').removeClass('active');
             $('#item3').removeClass('active');
+            $('#item5').removeClass('active');
+        });
+        $('#item5').click(function() {
+            $('#item5').addClass('active');
+            $('#item1').removeClass('active');
+            $('#item2').removeClass('active');
+            $('#item3').removeClass('active');
+            $('#item4').removeClass('active');
         });
 
     // });

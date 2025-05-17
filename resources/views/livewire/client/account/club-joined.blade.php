@@ -3,7 +3,7 @@
         <div class="title">
             <span class="ps-3"> Danh sách CLB bạn đang tham gia </span>
         </div>
-        <div>
+        <div class="table-responsive">
             <table class="table-content">
                 <thead>
                 <tr>

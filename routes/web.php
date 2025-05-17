@@ -26,26 +26,34 @@ Route::get('/',fn()=> view('client.pages.index'))->name('client.index');
 Route::get('/cau-lac-bo/{id}',[PageIndexController::class, 'index'])->name('client.page-club');
 
 Route::middleware('auth.sso')->group(function () {
-    Route::get('tai-khoan', function () {
-        return view('client.pages.account');
+    Route::get('tai-khoan/{item}', function ($item) {
+        return view('client.pages.account',[
+            'item' => $item,
+        ]);
     })->name('client.account');
 
 });
 
-//route admin
+//route super admin
+Route::middleware('auth.sso')->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::middleware('permission:Quản lý câu lạc bộ')->group(function () {
+            Route::get('/club', [ClubController::class,'index'])->name('admin.club.index');
+            Route::get('/club/detail/{id}', [ClubController::class,'detail'])->name('admin.club.detail');
+            Route::get('/request-club', [RequestClubController::class,'requestClub'])->name('admin.request-club.list');
+            Route::get('/request-club/detail/{id}', [RequestClubController::class,'detail'])->name('admin.request-club.detail');
+        });
+
+
+    });
+});
+
+//route admin club
 Route::middleware('auth.sso')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.pages.dashboard');
         })->name('admin.dashboard');
-
-        Route::middleware('permission:Quản lý câu lạc bộ')->group(function () {
-            Route::get('/club', [ClubController::class,'index'])->name('admin.club.index');
-            Route::get('/club/detail/{id}', [ClubController::class,'detail'])->name('admin.club.detail');
-
-            Route::get('/request-club', [RequestClubController::class,'requestClub'])->name('admin.request-club.list');
-            Route::get('/request-club/detail/{id}', [RequestClubController::class,'detail'])->name('admin.request-club.detail');
-        });
 
         Route::get('/club/list', [ClubController::class, 'listClub'])->name('admin.club.list-club');
 
