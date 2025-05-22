@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('slug')->unique()->nullable();
-            $table->text('content');
+            $table->longText('content')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->unsignedBigInteger('club_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedInteger('likes_count')->default(0);
             $table->unsignedInteger('comments_count')->default(0);
+            $table->unsignedBigInteger('category_post_id')->nullable();
+            $table->dateTime('publicDate')->nullable();
             $table->timestamps();
         });
     }

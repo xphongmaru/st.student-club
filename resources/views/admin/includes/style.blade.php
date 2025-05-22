@@ -6,6 +6,9 @@
 <link href="{{ asset('assets/admin/css/noty/noty.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
 {{--@vite(['resources/css/app.scss'])--}}
 <!-- /global stylesheets -->
+{{--<link href="{{ asset('assets/admin/css/ckeditor5.css') }}" id="stylesheet" rel="stylesheet" type="text/css">--}}
+{{--<link href="{{ asset('assets/admin/css/ckeditor5-content.css') }}" id="stylesheet" rel="stylesheet" type="text/css">--}}
+{{--<link href="{{ asset('assets/admin/css/ckeditor5-editor.css') }}" id="stylesheet" rel="stylesheet" type="text/css">--}}
 
 
 {{--<!-- Css custom -->--}}

@@ -16,8 +16,7 @@
                 <div class="breadcrumb py-2">
                     <a href="{{route('admin.dashboard')}}" class="breadcrumb-item"><i class="ph-house"></i></a>
                     <a href="#" class="breadcrumb-item active">Câu lạc bộ</a>
-                    <a href="{{route('admin.club.post-index',['id'=>$club_id])}}" class="breadcrumb-item active">Danh sách bài viết</a>
-                    <span class="breadcrumb-item active">Thêm bài viết mới</span>
+                    <a href="#" class="breadcrumb-item active">Danh sách bài viết </a>
                 </div>
             </div>
 
@@ -28,17 +27,9 @@
 @section('page-content')
     <div class="content">
         <!-- Content -->
-        <livewire:admin.clubs.posts.create :club_id="$club_id"/>
+        <livewire:admin.clubs.posts.index :club_id="$club_id"/>
         <!-- /Content -->
     </div>
-    {{--   start lên lịch--}}
-    <section class="quick-view">
-        <div class="modal fade" id="calender" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="top:30%">
-                <livewire:admin.clubs.posts.cpn-calender :club_id="$club_id" />
-            </div>
-        </div>
-    </section>
-    {{--   end lên lịch--}}
 @endsection
+
 

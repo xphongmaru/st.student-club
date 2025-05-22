@@ -18,7 +18,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="{{ asset('assets/admin/js/vendor/editors/ckeditor/ckeditor_classic.js') }}"></script>
+{{--<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>--}}
+
+<script src="{{ asset('assets/admin/js/vendor/editors/ckeditor/ckeditor_document.js') }}"></script>
+{{--<script src="{{ asset('assets/admin/js/editor_ckeditor_classic.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/admin/js/editor_ckeditor_document.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/admin/js/ckeditor5.umd.js') }}"></script>--}}
 
 @yield('script')
 {{--<!-- JS custom -->--}}
