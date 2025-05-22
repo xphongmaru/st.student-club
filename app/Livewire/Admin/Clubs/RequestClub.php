@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use App\Models\RequestClub as RequestClubModel;
-use Illuminate\Pagination\Paginator;
+use Livewire\WithPagination;
 
 class RequestClub extends Component
 {
+    use WithPagination;
     protected $listeners = [
         'confirmDeleteRequestClub' => 'confirmDeleteRequestClub',
         'confirmApproveRequestClub' => 'confirmApproveRequestClub',
@@ -21,10 +22,6 @@ class RequestClub extends Component
 
     public $requestClubId;
     public $search = '';
-    public function boot()
-    {
-        Paginator::useBootstrap();
-    }
 
     public function render()
     {
@@ -33,7 +30,7 @@ class RequestClub extends Component
             ->orWhere('field_of_activity', 'like', '%' . $this->search . '%')
             ->orWhere('status', 'like', '%' . StatusRequestClub::mapValue($this->search)->value . '%')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(1);
         return view('livewire.admin.clubs.request-club',[
             'requestClubs' => $requestClubs,
         ]);
@@ -123,5 +120,10 @@ class RequestClub extends Component
             'status' => StatusRequestClub::Approved->value,
         ]);
         $this->dispatch('flashMessage', type: 'success', message: 'Duyệt yêu cầu thành công');
+    }
+    protected $paginationTheme = 'bootstrap';
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 }

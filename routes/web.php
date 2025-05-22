@@ -9,7 +9,7 @@ use App\Http\Controllers\Client\Club\PageIndexController;
 use App\Http\Controllers\Admin\Clubs\MemberController;
 use App\Http\Controllers\Admin\Clubs\RoleController;
 use App\Http\Controllers\Admin\Clubs\RecruitmentMemberController;
-use App\Models\User;
+use App\Http\Controllers\Admin\Clubs\PostController;
 
 //route đăng nhâp sso
 Route::get('/auth/redirect', [AuthenticateController::class, 'redirectToSSO'])->name('sso.redirect');
@@ -54,6 +54,7 @@ Route::middleware('auth.sso')->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.pages.dashboard');
         })->name('admin.dashboard');
+        Route::post('/post/upload', [PostController::class, 'upload'])->name('admin.post.upload');
 
         Route::get('/club/list', [ClubController::class, 'listClub'])->name('admin.club.list-club');
 
@@ -75,6 +76,13 @@ Route::middleware('auth.sso')->group(function () {
 
             Route::get('/club/{id}/recruitment-member/{recruitment_id}/list-request', [RecruitmentMemberController::class, 'listRequest'])->name('admin.club.recruitment-member.list-request');
             Route::get('/club/{id}/recruitment-member/{recruitment_id}/list-request/{request_id}', [RecruitmentMemberController::class, 'detailRequest'])->name('admin.club.recruitment-member.detail-request');
+        });
+
+        Route::middleware('permission.club:Tạo bài viết mới')->group(function () {
+            Route::get('/club/{id}/post', [PostController::class, 'index'])->name('admin.club.post-index');
+            Route::get('/club/{id}/post/create', [PostController::class, 'create'])->name('admin.club.post-create');
+            Route::get('/club/{id}/post/edit/{post_id}', [PostController::class, 'edit'])->name('admin.club.post-edit');
+            Route::get('/club/{id}/post/{post_id}', [PostController::class, 'detail'])->name('admin.club.post-detail');
         });
     });
 });
