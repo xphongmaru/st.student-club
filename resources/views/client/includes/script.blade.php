@@ -63,8 +63,7 @@
     });
 
     document.addEventListener('livewire:init', () => {
-        Livewire.on('openModel', ({type,title,text,confirmEvent}) => {
-            console.log(type)
+        Livewire.on('openModel', ({type,title,text,confirmEvent,cancelDelete}) => {
             Swal.fire({
                 title: title,
                 icon: type,
@@ -77,6 +76,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.dispatch(confirmEvent);
+                }else {
+                    Livewire.dispatch(cancelDelete);
                 }
             });
         });

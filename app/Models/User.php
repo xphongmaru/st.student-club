@@ -60,6 +60,13 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function likePosts():BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'like_posts')
+            ->withPivot('user_id', 'post_id')
+            ->withTimestamps();
+    }
+
     public function followers():BelongsToMany
     {
         return $this->belongsToMany(Club::class, 'followers')
@@ -75,6 +82,16 @@ class User extends Authenticatable
     public function posts():HasMany
     {
         return $this->hasMany(Post::class, 'user_id');
+    }
+
+    public function comments():HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function likeComments(): BelongsToMany
+    {
+        return $this->belongsToMany(Comment::class, 'like_comments', 'comment_id', 'user_id')->withTimestamps();
     }
 
     public function request_clubs():HasMany

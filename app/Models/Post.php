@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
@@ -32,5 +34,16 @@ class Post extends Model
     public function categoryPost(): BelongsTo
     {
         return $this->belongsTo(CategoryPost::class, 'category_post_id');
+    }
+
+    public function likePosts():BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'like_posts')
+            ->withPivot('user_id', 'post_id')
+            ->withTimestamps();
+    }
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'post_id');
     }
 }

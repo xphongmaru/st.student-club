@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Admin\Clubs\Posts;
 
+use App\Models\Notification;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +38,9 @@ class Create extends Component
     public $status;
     #[Validate(as: 'ngày đăng bài viết')]
     public $datetime;
+
+    #[Validate(as: 'nội dung ngắn')]
+    public $sort_content;
     public $toggleAddCategoryPost = false;
     public $toggleCalender = false;
 
@@ -69,6 +74,7 @@ class Create extends Component
         $post->club_id = $this->club_id;
         $post->category_post_id = $this->category;
         $post->status = $this->status;
+        $post->sort_content = $this->sort_content;
         $post->user_id = auth()->user()->id;
         $post->slug = str($this->title)->slug();
         $post->publicDate = Carbon::now()->format('Y-m-d H:i:s');
@@ -77,7 +83,27 @@ class Create extends Component
             $post->thumbnail = $path;
         }
         $post->save();
-        $this->dispatch('flashMessage', type: 'success', message: 'Thêm bài viết thành công');
+        if($this->status == StatusPost::published){
+            $club = Club::query()->where('id', $this->club_id)->first();
+            $club->posts_count++;
+            $club->save();
+
+            //tạo thông báo đến thành viên câu lạc bô
+            $users=$club->users;
+            foreach ($users as $user){
+                Notification::query()->create([
+                    'user_id'=>$user->id,
+                    'title'=> $club->name.' đã có bài viết mới',
+                    'content'=>$this->title,
+                    'type'=>'newPost',
+                    'club_id'=>$this->club_id,
+                    'status'=>'pending',
+                    'url'=> route('client.club.post-detail',['id'=>$this->club_id, 'slug'=>str($this->title)->slug()]),
+                ]);
+            }
+        }
+        session()->flash('success', 'Thêm bài viết thành công.');
+        return redirect()->route('admin.club.post-index', ['id' => $this->club_id]);
     }
 
     public function storeDraft(){
@@ -95,6 +121,7 @@ class Create extends Component
         $post->club_id = $this->club_id;
         $post->category_post_id = $this->category;
         $post->status = $this->status;
+        $post->sort_content = $this->sort_content;
         $post->user_id = auth()->user()->id;
         $post->publicDate = null;
         if($this->thumbnail){
@@ -113,6 +140,7 @@ class Create extends Component
             'thumbnail' => 'image|max:2048',
             'category' => 'required|exists:category_posts,id',
             'status' => 'required',
+            'sort_content' => 'required|string|max:500',
         ]);
         $this->validate([
             'datetime' => 'required|date',
@@ -123,6 +151,7 @@ class Create extends Component
         $post->content = $this->content;
         $post->club_id = $this->club_id;
         $post->category_post_id = $this->category;
+        $post->sort_content = $this->sort_content;
         $post->status = StatusPost::scheduled;
         $post->user_id = auth()->user()->id;
         $post->slug = str($this->title)->slug();
@@ -132,7 +161,12 @@ class Create extends Component
             $post->thumbnail = $path;
         }
         $post->save();
-        $this->dispatch('flashMessage', type: 'success', message: 'Thêm bài viết thành công');
+        $club = Club::query()->where('id', $this->club_id)->first();
+        $club->posts_count++;
+        $club->save();
+
+        session()->flash('success', 'Lên lịch đăng bài viết thành công.');
+        return redirect()->route('admin.club.post-index', ['id' => $this->club_id]);
     }
 
     public function ShowAddCategoryPost(){
@@ -155,6 +189,7 @@ class Create extends Component
                 'thumbnail' => 'nullable|image|max:2048',
                 'category' => 'nullable|exists:category_posts,id',
                 'status' => 'nullable',
+                'sort_content' => 'nullable'
             ];
         }
         return [
@@ -163,7 +198,7 @@ class Create extends Component
             'thumbnail' => 'image|max:2048',
             'category' => 'required|exists:category_posts,id',
             'status' => 'required',
-//            'datetime' => 'required|date_format:Y-m-d H:i:s',
+            'sort_content' => 'required|string|max:500',
         ];
     }
 }

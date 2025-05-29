@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\Clubs\Posts;
 
 use App\Models\CategoryPost;
+use App\Models\Club;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -36,7 +38,8 @@ class Edit extends Component
     public $status;
     #[Validate(as: 'ngày đăng bài viết')]
     public $datetime;
-
+    #[Validate(as: 'nội dung ngắn')]
+    public $sort_content;
     public $oldThumbnail;
     public $oldThumbnail_2;
     public $oldStatus;
@@ -62,6 +65,7 @@ class Edit extends Component
         $this->oldStatus = $post->status;
         $this->datetime = $post->datetime;
         $this->club_id = $post->club_id;
+        $this->sort_content = $post->sort_content;
     }
 
     public function updatedThumbnail()
@@ -95,6 +99,7 @@ class Edit extends Component
             'thumbnail' => 'nullable|image|max:2048',
             'category' => 'nullable|exists:category_posts,id',
             'status' => 'nullable',
+            'sort_content' => 'nullable|string|max:500',
         ]);
         $post = Post::find($this->post_id);
         if($this->title==null){
@@ -105,6 +110,7 @@ class Edit extends Component
             $post->slug = str($this->title)->slug();
         }
         $post->content = $this->content;
+        $post->sort_content = $this->sort_content;
         $post->category_post_id = $this->category;
         if($this->thumbnail){
             if($this->oldThumbnail==1){
@@ -129,6 +135,7 @@ class Edit extends Component
         $post->title = $this->title;
         $post->slug = str($this->title)->slug();
         $post->content = $this->content;
+        $post->sort_content = $this->sort_content;
         $post->category_post_id = $this->category;
         if($this->thumbnail){
             if($this->oldThumbnail==1){
@@ -151,6 +158,21 @@ class Edit extends Component
         $mess='Cập nhật bài viết thành công.';
         if($this->oldStatus==StatusPost::draft->name || $this->oldStatus==StatusPost::pending->name || $this->oldStatus==StatusPost::scheduled->name){
             $mess = 'Đăng bài viết thành công.';
+            $club = Club::query()->where('id', $this->club_id)->first();
+            $club->posts_count++;
+            $club->save();
+            $users=$club->users;
+            foreach ($users as $user){
+                Notification::query()->create([
+                    'user_id'=>$user->id,
+                    'title'=> $club->name.' đã có bài viết mới',
+                    'content'=>$this->title,
+                    'type'=>'newPost',
+                    'club_id'=>$this->club_id,
+                    'status'=>'pending',
+                    'url'=> route('client.club.post-detail',['id'=>$this->club_id, 'slug'=>str($this->title)->slug()]),
+                ]);
+            }
         }
         session()->flash('success', $mess);
         return redirect()->route('admin.club.post-index', ['id' => $this->club_id]);
@@ -168,6 +190,7 @@ class Edit extends Component
         $post->title = $this->title;
         $post->slug = str($this->title)->slug();
         $post->content = $this->content;
+        $post->sort_content = $this->sort_content;
         $post->category_post_id = $this->category;
         if($this->thumbnail){
             if($this->oldThumbnail==1){
@@ -183,6 +206,9 @@ class Edit extends Component
         $post->publicDate = $this->datetime;
 
         $post->save();
+        $club = Club::query()->where('id', $this->club_id)->first();
+        $club->posts_count++;
+        $club->save();
         session()->flash('success', 'Lên lịch bài viết thành công.');
         return redirect()->route('admin.club.post-index', ['id' => $this->club_id]);
     }
@@ -201,6 +227,9 @@ class Edit extends Component
         $post = Post::find($this->post_id);
         $post->status = StatusPost::private;
         $post->save();
+        $club = Club::query()->where('id', $this->club_id)->first();
+        $club->posts_count--;
+        $club->save();
         session()->flash('success', 'Bài viết đã được chuyển sang chế độ riêng tư.');
         return redirect()->route('admin.club.post-index', ['id' => $this->club_id]);
     }
@@ -211,6 +240,9 @@ class Edit extends Component
         $post->status = StatusPost::published;
         $post->save();
         session()->flash('success', 'Bài viết đã được chuyển sang chế độ công khai.');
+        $club = Club::query()->where('id', $this->club_id)->first();
+        $club->posts_count++;
+        $club->save();
         return redirect()->route('admin.club.post-index', ['id' => $this->club_id]);
     }
 
@@ -244,11 +276,13 @@ class Edit extends Component
             'thumbnail' => 'image|max:2048',
             'category' => 'required|exists:category_posts,id',
             'status' => 'required',
+            'sort_content' => 'required|string|max:500',
         ]);
         $post = Post::find($this->post_id);
         $post->title = $this->title;
         $post->slug = str($this->title)->slug();
         $post->content = $this->content;
+        $post->sort_content = $this->sort_content;
         $post->category_post_id = $this->category;
         if($this->thumbnail){
             if($this->oldThumbnail==1){
@@ -300,6 +334,7 @@ class Edit extends Component
                 'content' => 'required|string',
                 'thumbnail' => 'nullable|image|max:2048',
                 'category' => 'required|exists:category_posts,id',
+                'sort_content' => 'required|string|max:500',
                 'status' => 'required',
             ];
         }
@@ -309,7 +344,7 @@ class Edit extends Component
             'thumbnail' => 'image|max:2048',
             'category' => 'required|exists:category_posts,id',
             'status' => 'required',
-//            'datetime' => 'required|date_format:Y-m-d H:i:s',
+            'sort_content' => 'required|string|max:500',
         ];
     }
 

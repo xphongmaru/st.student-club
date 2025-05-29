@@ -8,15 +8,22 @@
             <div class="rainbow-card box-card-style-default">
                 <div class="inner">
                     <div class="thumbnail"><a class="image" href="{{route('client.page-club',$club->id)}}"><img src="{{$club->banner==null?asset('storage/'.$club->thumbnail):asset('storage/'.$club->banner)}}" alt="Blog Image"></a></div>
-                    <div class="content pt--0">
-                        <h4 class="title mb--5"><a href="#">{{$club->name}}</a>
+                    <div class="content pt--0 justify-content-between">
+                        <h4 class="title mb--5"><a href="{{route('client.page-club',$club->id)}}">{{$club->name}}</a>
                         </h4>
                         <ul class="rainbow-meta-list">
                             <li>{{$club->description}}</li>
                         </ul>
-                        <div class="d-flex justify-content-between mt--10" style="width: 100%">
+                        <div class="d-flex justify-content-between mt--10 pb--20" style="width: 100%">
                             <div class="ms-3">
-                                <i style="color: red" data-feather="heart"></i>
+                                @if(Auth::check())
+                                    @if($club->likes()->where('user_id', auth()->user()->id)->exists()) <i style="color: red; font-size: 18px" class='fa fa-heart'></i>
+                                    @else
+                                        <i style="color: red; font-size: 18px" class='fa fa-heart-o'></i>
+                                    @endif
+                                @else
+                                    <i style="color: red; font-size: 18px" class='fa fa-heart-o'></i>
+                                @endif
                                 <span class="ms-2 fs-3">{{$club->likes_count}}</span>
                             </div>
                             <div class="right-button me-3">

@@ -126,6 +126,18 @@
                     <li class="nav-item-header">
                         <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Bài viết</div>
                     </li>
+                    @if(session('club_id') && Auth::user()->hasPermissonClub('Quản lý bài viết', session('club_id')))
+                        <li class="nav-item">
+                            <a href="{{route('admin.club.category-post.index',['id'=>session('club_id')])}}"
+                               class="nav-link {{ request()->routeIs('admin.club.category-post.index') ? 'active' : '' }}"
+                               style="display: flex; align-items: center;">
+                                <i class="ph-house-simple me-3 fa"></i>
+                                <span style="display: flex; align-items: center;">
+                                            Danh mục bài viết
+                                        </span>
+                            </a>
+                        </li>
+                    @endif
                     @if(session('club_id') && Auth::user()->hasPermissonClub('Tạo bài viết mới', session('club_id')))
                         <li class="nav-item">
                             <a href="{{route('admin.club.post-index',['id'=>session('club_id')])}}"
