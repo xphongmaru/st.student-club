@@ -11,9 +11,15 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+
+    protected $listeners = [
+        'deletePost' => 'deletePost',
+    ];
+
     public $club_id;
     public $search;
     public $selectedStatus;
+    public $post_id;
 
     public function render()
     {
@@ -70,6 +76,30 @@ class Index extends Component
             'posts' => $posts,
         ]);
     }
+
+    public function openDeleteModel($id)
+    {
+        $this->post_id = $id;
+        $this->dispatch('openModel', type: 'warning', title: 'Xóa bài viết', text: 'Bạn có chắc chắn muốn xóa bài viết này không?', confirmEvent: 'deletePost');
+    }
+
+    public function deletePost()
+    {
+        $post = Post::query()->find($this->post_id);
+        if($post == null){
+            $this->dispatch('flashMessage', type: 'error', message: 'Bài viết không tồn tại');
+            return;
+        }
+
+        if($post->user_id != auth()->user()->id && Auth::user()->hasPermissonClub('Quản lý bài viết', $this->club_id) == false){
+            $this->dispatch('flashMessage', type: 'error', message: 'Bạn không có quyền xóa bài viết này');
+            return;
+        }
+        $post->delete();
+        $this->dispatch('flashMessage', type: 'success', message: 'Xóa bài viết thành công');
+
+    }
+
     protected $paginationTheme = 'bootstrap';
     public function updatingSearch()
     {

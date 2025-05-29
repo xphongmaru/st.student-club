@@ -12,9 +12,8 @@
                     <div class="breadcrumb-inner ms-3">
                         {{--                        <h1 class="title theme-gradient h2">Blog List View.</h1>--}}
                         <ul class="page-list">
-                            <li class="rainbow-breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="rainbow-breadcrumb-item"><a href="">Câu lạc bộ</a></li>
-{{--                            <li class="rainbow-breadcrumb-item active">{{$club->name}}</li>--}}
+                            <li class="rainbow-breadcrumb-item"><a href="{{route('client.index')}}">Trang chủ</a></li>
+                            <li class="rainbow-breadcrumb-item active">Quản lý tài khoản</li>
                         </ul>
                     </div>
                 </div>

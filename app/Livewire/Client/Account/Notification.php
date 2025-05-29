@@ -9,12 +9,14 @@ use Nette\Utils\Paginator;
 
 class Notification extends Component
 {
+    public $take = 5;
     public function render()
     {
         $notifications = NotificationModel::query()
             ->where('user_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->take($this->take)
+            ->get();
         $hasNotification = NotificationModel::query()
             ->where('user_id', auth()->user()->id)
             ->where('is_read', 0)
@@ -23,6 +25,11 @@ class Notification extends Component
             'notifications'=>$notifications,
             'hasNotification' => $hasNotification,
         ]);
+    }
+
+    public function loadMore()
+    {
+        $this->take += 3;
     }
 
     public function ReadAllNoti()
@@ -51,5 +58,28 @@ class Notification extends Component
         $notification->read_at = now();
         $notification->save();
         return redirect($notification->url);
+    }
+
+    public function deleteNoti($id)
+    {
+        $noti = NotificationModel::query()->where('id', $id)->first();
+        if($noti == null){
+            $this->dispatch('flashMessage', type:'warning', message: 'Thông báo không tồn tại');
+            return;
+        }
+        $noti->delete();
+        $this->dispatch('flashMessage', type:'success', message: 'Đã xóa thông báo');
+    }
+
+    public function readNoti($id)
+    {
+        $notification = NotificationModel::query()->where('id', $id)->first();
+        if($notification == null){
+            $this->dispatch('flashMessage', type:'warning', message: 'Thông báo không tồn tại');
+            return;
+        }
+        $notification->is_read = 1;
+        $notification->read_at = now();
+        $notification->save();
     }
 }

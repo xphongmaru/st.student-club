@@ -76,7 +76,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{$post->title==null?'< chưa có tiêu đề >':$post->title}}</td>
-                                    <td class="text-center" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">{{ $post->content!=null?strip_tags($post->content): 'chưa có nội dung'}}</td>
+                                    <td class="text-center" style="line-height: 18px; height: calc(20px * 8);; display: -webkit-box;-webkit-line-clamp: 8;-webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis">{{ $post->sort_content!=''?$post->sort_content: 'chưa có nội dung'}}</td>
                                     <td class="text-center">{{$post->category_post_id!=null?$post->categoryPost->name:'chưa có danh mục'}}</td>
                                     <td class="text-center">{{$post->user->full_name}}</td>
                                     @php
@@ -104,10 +104,12 @@
                                                 <i class="ph-list"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="{{ route('admin.club.post-detail', ['id' => $club_id, 'post_id'=> $post->id])}}" class="dropdown-item">
-                                                    <i class="ph-eye me-2"></i>
-                                                    Xem chi tiết
-                                                </a>
+                                                @if($post->status != App\Enums\StatusPost::draft->name)
+                                                    <a href="{{ route('admin.club.post-detail', ['id' => $club_id, 'post_id'=> $post->id])}}" class="dropdown-item">
+                                                        <i class="ph-eye me-2"></i>
+                                                        Xem chi tiết
+                                                    </a>
+                                                @endif
                                                 <a href="{{ route('admin.club.post-edit', ['id' => $club_id, 'post_id'=> $post->id])}}" class="dropdown-item text-warning">
                                                     <i class="ph-pencil me-2"></i>
                                                     Chỉnh sửa

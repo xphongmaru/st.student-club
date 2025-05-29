@@ -17,4 +17,9 @@ class PageIndexController extends Controller
             'club' => $club,
         ]);
     }
+
+    public function listClub()
+    {
+        return  view('client.pages.list-club');
+    }
 }

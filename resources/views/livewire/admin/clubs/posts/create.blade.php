@@ -263,6 +263,20 @@
 
                 <div class="form-group mt-2">
                     <label class="form-label">
+                        Nội dung ngắn: <span class="text-danger">*</span>
+                    </label>
+                    <div>
+                        <textarea wire:model.live="sort_content" type="text" placeholder="Nhập vào tiêu đề bài viết" class="form-control  @error('sort_content') is-invalid @enderror">
+
+                        </textarea>
+                        @error('sort_content')
+                        <label class="text-danger mt-1">{{ $message }}</label>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label class="form-label">
                         Nội dung bài viết: <span class="text-danger">*</span>
                     </label>
 

@@ -15,25 +15,43 @@
                 <ul style="list-style: none; cursor: pointer">
                     @foreach($notifications as $notification)
                         <li >
-                            <div class="d-flex notification mt--10 p-4 @if($notification->is_read == 0) noti-isRead @endif" wire:click="read({{$notification->id}})">
-                                <div class="noti-avatar" style="width: 10%;"><img src="{{asset('storage/'.$notification->club->thumbnail)}}" alt="" ></div>
-                                <div class="noti-content ms-4" style="width: 80%;">
-                                    <span class="mb-2 noti-title">{{$notification->title}}</span>
-                                    <span class="noti-cont">{{ $notification->content}}</span>
-                                    <span class="noti-date">{{ $notification->created_at->format('H:i d/m/Y') }}</span>
+                            <div class="d-flex notification mt--10 p-4 @if($notification->is_read == 0) noti-isRead @endif" style="z-index: 1">
+                                <div wire:click="read({{$notification->id}})" class="d-flex">
+                                    <div class="noti-avatar" style="width: 10%;"><img src="{{asset('storage/'.$notification->club->thumbnail)}}" alt="" ></div>
+                                    <div class="noti-content ms-4" style="width: 80%;">
+                                        <span class="mb-2 noti-title">{{$notification->title}}</span>
+                                        <span class="noti-cont">{{ $notification->content}}</span>
+                                        <span class="noti-date">{{ $notification->created_at->format('H:i d/m/Y') }}</span>
+                                    </div>
                                 </div>
                                 @if($notification->is_read == 0)
                                     <div class="isRead">
                                     </div>
                                 @endif
+                                <div class="dropdown text-center modeFN" style="margin-top: 12px">
+                                    <a class="javascript:void(0)" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="event.stopPropagation()" style="-webkit-user-select: none; padding: 0px 10px; border-radius: 45%; background-color: #f0f0f0; color: #333; font-size: 24px; line-height: 24px">
+                                        <i class='fa fa-ellipsis-h'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><button class="dropdown-item" wire:click="deleteNoti({{$notification->id}})">Xóa thông báo này </button></li>
+                                        <li><button class="dropdown-item" wire:click="readNoti({{$notification->id}})">Đánh dấu là đã đọc</button></li>
+                                    </ul>
+                                </div>
                             </div>
                         </li>
                     @endforeach
-                        <div class="d-flex justify-content-center align-items-center w-100 mt-3" style="font-size: 16px">
-                            <div class="pagination">
-                                {{ $notifications->links() }}
+                        @if($notifications->count() >= $take)
+                            <div class="d-flex justify-content-center align-items-center w-100 mt-3" style="font-size: 16px">
+                                <div class="pagination">
+                                    <button wire:click="loadMore" wire:loading.attr="disabled" class="btn btn-default">
+                                        <span wire:loading.remove wire:target="loadMore">Xem thêm thông báo</span>
+                                        <span wire:loading wire:target="loadMore">
+                                            <i class="fa fa-spinner fa-spin me-2"></i> Đang tải...
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                 </ul>
 
             @endif

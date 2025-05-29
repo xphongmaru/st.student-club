@@ -9349,7 +9349,7 @@ xclip
 }
 
 .breadcrumb-inner ul.page-list li a:hover {
-    color: var(--color-primary);
+    color: var(--color-vnua) !important;
 }
 
 .breadcrumb-inner ul.page-list li.rainbow-breadcrumb-item.active {
@@ -9360,7 +9360,9 @@ xclip
 .breadcrumb-inner ul.page-list li.rainbow-breadcrumb-item.active::after {
     display: none;
 }
-
+input[type="text"]:focus{
+    border: 1px solid var(--color-vnua);
+}
 .section-title .subtitle {
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -13982,9 +13984,9 @@ body.active-light-mode .rainbow-back-top:hover svg{
 .rainbow-card .inner .content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 200px;
-    padding: 30px;
+    padding: 10px 30px;
     padding-top: 22px;
 }
 
@@ -14000,8 +14002,7 @@ body.active-light-mode .rainbow-back-top:hover svg{
 }
 
 .rainbow-card .inner .content .title {
-    font-size: 20px;
-    line-height: 1.5;
+    font-size:16px;
     transition: all 0.5s;
     margin-bottom: 0;
     margin-top: 15px;
@@ -14047,6 +14048,10 @@ body.active-light-mode .rainbow-back-top:hover svg{
     flex-basis: 54%;
 }
 
+ul li a:hover{
+    color: var(--color-vnua);
+}
+
 .rainbow-card.card-list-view .inner .content .title {
     margin-bottom: 10px;
 }
@@ -14059,6 +14064,7 @@ body.active-light-mode .rainbow-back-top:hover svg{
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 15px;
 }
 
 .rainbow-card.content-transparent {
@@ -14170,7 +14176,7 @@ body.active-light-mode .rainbow-back-top:hover svg{
     top: 50%;
     transform: translateY(-50%);
     border: 0 none;
-    background: var(--color-primary-light);
+    background: var(--color-vnua);
     height: 47px;
     padding: 0 20px;
     border-radius: 3px;
@@ -14307,7 +14313,7 @@ body.active-light-mode .rainbow-back-top:hover svg{
 .rbt-single-widget.widget_meta ul li a:hover,
 .rbt-single-widget.widget_pages ul li a:hover,
 .rbt-single-widget.widget_nav_menu ul li a:hover {
-    color: var(--color-primary);
+    color: var(--color-vnua) !important;
 }
 
 .rbt-single-widget.widget_recent_comments ul li span,
@@ -14452,9 +14458,8 @@ body.active-light-mode .rainbow-back-top:hover svg{
 
 .post-page-banner .rainbow-meta-list li {
     color: var(--color-body);
-    font-size: 20px;
+    font-size: 16px;
     margin: 0 15px;
-    margin-top: 38px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {

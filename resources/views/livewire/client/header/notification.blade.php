@@ -15,7 +15,6 @@
                         <div class="noti-no-login">
                             <img src="{{asset('assets\client\images\user\login.svg')}}" alt="">
                             <span>Đăng nhập để xem thông báo </span>
-
                         </div>
                     </a>
                 </li>

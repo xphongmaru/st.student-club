@@ -1224,6 +1224,18 @@ th, td {
     background-color: rgba(0, 0, 0, 0.05);
     opacity: 0.8;
 }
+.modeFN{
+    opacity: 0;
+}
+
+.notification:hover .modeFN{
+    opacity: 1;
+}
+.modeFN .dropdown-menu{
+    background-color: white !important;
+
+}
+
 
 .noti-isRead{
     background-color: #faf8ed;
@@ -1358,3 +1370,67 @@ body.active-light-mode .page-link{
     margin: 0 4px;
     text-align: center;
 }
+
+
+.custom-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.custom-pagination li {
+    width: 40px;
+    height: 40px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+body.active-light-mode .custom-pagination li{
+    border: 1px solid darkgrey;
+
+}
+
+.custom-pagination li a, .custom-pagination li span {
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.active-light-mode .custom-pagination li a{
+    color: var(--color-dark);
+}
+
+.custom-pagination li.active {
+    background-color: var(--color-vnua);
+    border: 1px solid var(--color-vnua);
+    font-weight: bold;
+    color: white !important;
+}
+
+body.active-light-mode .custom-pagination li a:hover{
+    color: var(--color-vnua);
+}
+
+.custom-pagination li.disabled span {
+    color: #999;
+}
+
+.comment {
+    border: 1px solid var(--color-gray);
+    border-radius: 5px;
+}
+
+textarea:focus {
+    border: 1px solid var(--color-vnua);
+}
+

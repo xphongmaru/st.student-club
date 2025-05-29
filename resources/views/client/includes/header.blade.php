@@ -14,9 +14,10 @@
                         <ul class="mainmenu">
                             <li><a href="{{route('client.index')}}">Trang chủ</a></li>
                             <li><a href="#">Hoạt động</a></li>
-                            <li class="has-droupdown has-menu-child-item"><a href="#">Thông báo</a>
+                            <li class="has-droupdown has-menu-child-item"><a href="@if(Auth()->check()) {{route('client.account',['item'=>2])}} @else {{route('sso.redirect')}}  @endif">Thông báo</a>
                                 <livewire:client.header.notification/>
                             </li>
+                            <li><a href="{{route('client.post')}}">Bài viết</a></li>
                             <li><a href="#">Liên hệ</a></li>
                         </ul>
                     </nav>
@@ -27,7 +28,7 @@
                     <div class="side-wrap user-wrap">
                         <div class="acc-desk d-flex align-items-center">
                             <div class="user-icon">
-                                <a href="@if(Auth()->check()) {{route('client.account',['item'=>1])}} @endif" class="user-icon-desk">
+                                <a href="@if(Auth()->check()) {{route('client.account',['item'=>1])}} @else {{route('sso.redirect')}} @endif" class="user-icon-desk">
                                     <span><i class="me-3" style="width: 30px !important;height: 30px !important;" data-feather="user"></i></span>
                                 </a>
 
@@ -35,7 +36,7 @@
                             <div class="user-info">
                                 @if(Auth()->check())
 {{--                                    <span class="fs-4 ps-3" style="font-weight: 600">{{session('userData.full_name')}}</span>--}}
-                                    <span class="fs-4" style="font-weight: 600">{{Auth()->user()->full_name}}</span>
+                                    <a href="@if(Auth()->check()) {{route('client.account',['item'=>1])}} @endif"> <span class="fs-4" style="font-weight: 600">{{Auth()->user()->full_name}}</span></a>
                                 @else
                                     <span class="fs-4" style="font-weight: 600">Tài khoản</span>
                                 @endif
@@ -116,6 +117,7 @@
             <li><a href="{{route('client.index')}}">Trang chủ</a></li>
             <li><a href="">Hoạt động</a></li>
             <li><a href="">Thông báo</a></li>
+            <li><a href="">Bài viết</a></li>
             <li><a href="">Liên hệ</a></li>
         </ul>
     </div>

@@ -10,10 +10,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-inner ms-3">
-{{--                        <h1 class="title theme-gradient h2">Blog List View.</h1>--}}
                         <ul class="page-list">
-                            <li class="rainbow-breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="rainbow-breadcrumb-item"><a href="">Câu lạc bộ</a></li>
+                            <li class="rainbow-breadcrumb-item"><a href="{{route('client.index')}}">Trang chủ</a></li>
                             <li class="rainbow-breadcrumb-item active">{{$club->name}}</li>
                         </ul>
                     </div>
@@ -71,123 +69,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title text-center" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
-                            <h2 class="title w-600 mb--20">Bài viết câu lạc bộ </h2>
+                            <h2 class="title w-600 mb--20">Bài viết mới nhất </h2>
                         </div>
                     </div>
                 </div>
-                <div class="row mt_dec--30">
-                    <div class="col-lg-12">
-                        <div class="row row--15">
-                            <div class="col-lg-6 mt--30">
-                                <div class="rainbow-card box-card-style-default card-list-view">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a class="image" href="#">
-                                                <img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image">
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h4 class="title">
-                                                <a href="#">Tiêu đề bài viết</a>
-                                            </h4>
-                                            <ul class="rainbow-meta-list">
-                                                <li><a href="#">Name</a></li>
-                                                <li class="separator">/</li>
-                                                <li>10 Dec 2021</li>
-                                            </ul>
-                                            <div style="width: 100%">
-                                                <span class="descriptiion">Mô tả ngắn nội dung bài viết.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mt--30">
-                                <div class="rainbow-card box-card-style-default card-list-view">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a class="image" href="#">
-                                                <img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image">
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h4 class="title">
-                                                <a href="#">Tiêu đề bài viết</a>
-                                            </h4>
-                                            <ul class="rainbow-meta-list">
-                                                <li><a href="#">Name</a></li>
-                                                <li class="separator">/</li>
-                                                <li>10 Dec 2021</li>
-                                            </ul>
-                                            <div style="width: 100%">
-                                                <span class="descriptiion">Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mt--30">
-                                <div class="rainbow-card box-card-style-default card-list-view">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a class="image" href="#">
-                                                <img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image">
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h4 class="title">
-                                                <a href="#">Tiêu đề bài viết</a>
-                                            </h4>
-                                            <ul class="rainbow-meta-list">
-                                                <li><a href="#">Name</a></li>
-                                                <li class="separator">/</li>
-                                                <li>10 Dec 2021</li>
-                                            </ul>
-                                            <div style="width: 100%">
-                                                <span class="descriptiion">Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mt--30">
-                                <div class="rainbow-card box-card-style-default card-list-view">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a class="image" href="#">
-                                                <img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image">
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h4 class="title">
-                                                <a href="#">Tiêu đề bài viết</a>
-                                            </h4>
-                                            <ul class="rainbow-meta-list">
-                                                <li><a href="#">Name</a></li>
-                                                <li class="separator">/</li>
-                                                <li>10 Dec 2021</li>
-                                            </ul>
-                                            <div style="width: 100%">
-                                                <span class="descriptiion">Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết. Mô tả ngắn nội dung bài viết.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="rainbow-load-more text-center mt--40">
-                            <button class="btn btn-default btn-icon round">
-                                <span>Xem thêm
-                                    <span class="icon">
-                                        <i data-feather="arrow-right"></i>
-                                        </span>
-                                    </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <livewire:client.club.list-post :club="$club"/>
             </div>
         </div>
     </div>
