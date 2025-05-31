@@ -10,6 +10,7 @@ body.active-dark-mode .quick-view .modal-dialog .modal-content{
     background-color: var(--color-dark);
     border: 1px solid rgba(101, 103, 107, 0.32);
 }
+
 .quick-view .modal-dialog{
     max-width: 700px !important;
     top: 20px;
@@ -1432,5 +1433,33 @@ body.active-light-mode .custom-pagination li a:hover{
 
 textarea:focus {
     border: 1px solid var(--color-vnua);
+}
+
+.lg-outer{
+    z-index: 999999;
+    background-color: #65676b;
+}
+
+.lg-outer .lg-image{
+    margin-top: 45px;
+}
+
+.table-responsive{
+    overflow-x: inherit;
+    overflow-y: initial;
+}
+
+@media only screen and (max-width: 768px) {
+    .event-content{
+        flex-direction: column;
+    }
+
+    .event-content div{
+        width: 100% !important;
+    }
+
+    .rainbow-card .inner .content{
+        padding: 10px 20px;
+    }
 }
 

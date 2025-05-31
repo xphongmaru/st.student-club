@@ -10,16 +10,17 @@ use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\CategoryPostController;
 use App\Http\Controllers\Client\Club\ClientPostController;
 use App\Http\Controllers\Client\Club\PageIndexController;
+use App\Http\Controllers\EventController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 //route đăng nhâp sso
-Route::get('/auth/redirect', [AuthenticateController::class, 'redirectToSSO'])->name('sso.redirect');
-//Route::get('/auth/redirect', function (){
-//    $user = User::query()->where('id',3
-//    )->firstOrFail();
-//    Auth::login($user);
-//})->name('sso.redirect');
+//Route::get('/auth/redirect', [AuthenticateController::class, 'redirectToSSO'])->name('sso.redirect');
+Route::get('/auth/redirect', function (){
+    $user = User::query()->where('id',1
+    )->firstOrFail();
+    Auth::login($user);
+})->name('sso.redirect');
 Route::get('/auth/callback', [AuthenticateController::class, 'handleSSOCallback'])->name('sso.callback');
 Route::get('/logout', [AuthenticateController::class, 'logout'])->name('handelLogout');
 
@@ -98,6 +99,13 @@ Route::middleware('auth.sso')->group(function () {
             Route::get('/club/{id}/category/post/create', [CategoryPostController::class, 'create'])->name('admin.club.category-post.create');
             Route::get('/club/{id}/category/post/edit/{category_id}', [CategoryPostController::class, 'edit'])->name('admin.club.category-post.edit');
             Route::get('/club/{id}/category/post/{category_id}', [CategoryPostController::class, 'detail'])->name('admin.club.category-post.detail');
+        });
+
+        Route::middleware('permission.club:Quản lý danh sách các sự kiện')->group(function () {
+            Route::get('/club/{id}/event', [EventController::class, 'index'])->name('admin.club.event-index');
+            Route::get('/club/{id}/event/create', [EventController::class, 'create'])->name('admin.club.event-create');
+            Route::get('/club/{id}/event/edit/{event_id}', [EventController::class, 'edit'])->name('admin.club.event-edit');
+            Route::get('/club/{id}/event/{event_id}', [EventController::class, 'detail'])->name('admin.club.event-detail');
         });
 
 

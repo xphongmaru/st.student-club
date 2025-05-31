@@ -81,237 +81,7 @@
 
     <div class="main-content">
         <div class="rainbow-blog-area rainbow-section-gap pt--20">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title text-center" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
-                            <h2 class="title w-600 mb--20">Các hoạt động của câu lạc bộ</h2>
-                        </div>
-                    </div>
-                </div>
-                <div id="owl-demo" class="owl-carousel owl-theme">
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="cmt--30" data-sal="slide-up" data-sal-duration="700">
-                            <div class="rainbow-card box-card-style-default">
-                                <div class="inner">
-                                    <div class="thumbnail"><a class="image" href="#"><img src="{{asset('assets/client/images/clb/clb-01.jpg')}}" alt="Blog Image"></a></div>
-                                    <div class="content pt--0">
-                                        <h4 class="title mb--5"><a href="#">CLB học tập C/C++</a>
-                                        </h4>
-                                        <ul class="rainbow-meta-list">
-                                            <li>Là nơi gặp gỡ, chia sẻ và học hỏi giữa các thành viên với nhau cũng như với các CLB, tổ chức bạn. Chúng tôi tạo ra một môi trường mở – nơi mọi ý tưởng đều được lắng nghe, mọi cá tính đều được tôn trọng, và mọi người đều có cơ hội thể hiện bản thân.</li>
-                                        </ul>
-                                        <div class="mt--10" style="width: 100%">
-                                            <div class="ms-1">
-                                                <i style="color: var(--color-vnua);" data-feather="calendar"></i>
-                                                <span class="ms-2" style="font-size: 16px; font-weight: 500">30-04-1975</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <livewire:client.club.list-event :club="$club"/>
         </div>
     </div>
     <style>
@@ -342,6 +112,16 @@
         </div>
     </section>
     {{--   end cập nhật thông tin--}}
+
+    {{--   start quick view event--}}
+    <section class="quick-view">
+        <div class="modal fade" id="quickViewEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 1200px!important;">
+                <livewire:client.club.quick-view-event :club="$club" />
+            </div>
+        </div>
+    </section>
+    {{--   end quick view event--}}
 @endsection
 @section('script_custom')
     <script>
@@ -365,6 +145,30 @@
                 setTimeout(() => {
                     document.querySelector('.select2-search__field').placeholder = "Tìm kiếm khoa";
                 }, 0);
+            });
+        });
+    </script>
+    <script>
+        function initGallery(selector = '#animated-lightbox3') {
+            const el = document.querySelector(selector);
+            if (el) {
+                if (el.classList.contains('lg-initialized')) {
+                    el.lgDestroy && el.lgDestroy();
+                }
+                lightGallery(el, {
+                    selector: 'a',
+                    thumbnail: true,
+                    animateThumb: true,
+                    showThumbByDefault: true,
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initGallery(); // khởi tạo lần đầu
+
+            Livewire.on('loadPhoto', () => {
+                setTimeout(() => initGallery(), 100); // đợi DOM cập nhật xong
             });
         });
     </script>

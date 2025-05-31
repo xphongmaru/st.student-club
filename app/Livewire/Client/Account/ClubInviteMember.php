@@ -40,6 +40,8 @@ class ClubInviteMember extends Component
         }
         $club = Club::query()->where('id', $invite->pivot->club_id)->first();
         $club->users()->attach($user);
+        $club->members_count ++;
+        $club->save();
 
         $invite->pivot->status = StatusRequestClub::Approved;
         $invite->pivot->save();

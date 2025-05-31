@@ -1,7 +1,7 @@
 <div>
     <div class="modal-content">
         <div class="logo-mini">
-            <img src="{{asset('assets\admin\images\logo_vnua.png')}}" alt="">
+            <img src="{{asset('storage/'.$club->thumbnail)}}" alt="">
         </div>
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa thông tin câu lạc bộ </h5>

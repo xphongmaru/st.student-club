@@ -79,6 +79,8 @@ class MemberIndex extends Component
 
         //xóa thành viên
         $club->users()->detach($this->delete_id);
+        $club->members_count --;
+        $club->save();
         $user = User::query()->find($this->delete_id);
         $roleClub = $user->getRoleClub($club->id, $this->delete_id);
         if($roleClub != null){

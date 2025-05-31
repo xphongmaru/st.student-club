@@ -150,6 +150,22 @@
                             </a>
                         </li>
                     @endif
+
+                    <li class="nav-item-header">
+                        <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Sự kiện</div>
+                    </li>
+                    @if(session('club_id') && Auth::user()->hasPermissonClub('Quản lý danh sách các sự kiện', session('club_id')))
+                        <li class="nav-item">
+                            <a href="{{route('admin.club.event-index',['id'=>session('club_id')])}}"
+                               class="nav-link {{ request()->routeIs('admin.club.event-index') ? 'active' : '' }}"
+                               style="display: flex; align-items: center;">
+                                <i class="ph-house-simple me-3 fa"></i>
+                                <span style="display: flex; align-items: center;">
+                                                Danh sách các sự kiện
+                                            </span>
+                            </a>
+                        </li>
+                    @endif
             </ul>
         </div>
         <!-- /main navigation -->

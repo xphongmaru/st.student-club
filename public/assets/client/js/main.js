@@ -23,7 +23,7 @@
     });
 
     $('#owl-demo').owlCarousel({
-        loop: true,
+        loop: false,
         items: 4,
         margin: 10,
         nav: false,

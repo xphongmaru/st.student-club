@@ -13984,8 +13984,8 @@ body.active-light-mode .rainbow-back-top:hover svg{
 .rainbow-card .inner .content {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    height: 200px;
+    justify-content: space-between;
+    height: 180px;
     padding: 10px 30px;
     padding-top: 22px;
 }

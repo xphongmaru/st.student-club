@@ -28,7 +28,7 @@ class Index extends Component
 
         $clubs = $query
             ->orderBy('created_at', 'desc')
-            ->paginate(1);
+            ->paginate(10);
 
         return view('livewire.client.list-club.index',[
             'clubs' => $clubs,

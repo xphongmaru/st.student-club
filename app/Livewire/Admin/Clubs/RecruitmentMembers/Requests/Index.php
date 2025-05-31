@@ -98,6 +98,8 @@ class Index extends Component
         $user = User::find($request->user_id);
         $club = Club::find($this->club_id);
         $club->users()->attach($user);
+        $club->members_count ++;
+        $club->save();
 
         $this->dispatch('flashMessage', type: 'success', message: 'Duyệt yêu cầu thành công');
 

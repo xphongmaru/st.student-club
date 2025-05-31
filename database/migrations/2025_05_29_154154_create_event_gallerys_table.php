@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('event_galleries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('club_id');
-            $table->string('name');
-            $table->longText('description')->nullable();
-            $table->string('thumbnail')->nullable();
-            $table->date('event_date')->nullable();
+            $table->unsignedBigInteger('event_id');
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('event_galleries');
     }
 };

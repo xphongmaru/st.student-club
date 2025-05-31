@@ -8,7 +8,7 @@
             <div class="rainbow-card box-card-style-default">
                 <div class="inner">
                     <div class="thumbnail"><a class="image" href="{{route('client.page-club',$club->id)}}"><img src="{{$club->banner==null?asset('storage/'.$club->thumbnail):asset('storage/'.$club->banner)}}" alt="Blog Image"></a></div>
-                    <div class="content pt--0 justify-content-between">
+                    <div class="content pt--0 justify-content-between" style="height: 200px">
                         <h4 class="title mb--5"><a href="{{route('client.page-club',$club->id)}}">{{$club->name}}</a>
                         </h4>
                         <ul class="rainbow-meta-list">
