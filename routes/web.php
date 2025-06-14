@@ -17,12 +17,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 //route đăng nhâp sso
-//Route::get('/auth/redirect', [AuthenticateController::class, 'redirectToSSO'])->name('sso.redirect');
-    Route::get('/auth/redirect', function (){
-    $user = User::query()->where('id',3
-    )->firstOrFail();
-    Auth::login($user);
-})->name('sso.redirect');
+Route::get('/auth/redirect', [AuthenticateController::class, 'redirectToSSO'])->name('sso.redirect');
+//     Route::get('/auth/redirect', function (){
+//     $user = User::query()->where('id',3
+//     )->firstOrFail();
+//     Auth::login($user);
+// })->name('sso.redirect');
 Route::get('/auth/callback', [AuthenticateController::class, 'handleSSOCallback'])->name('sso.callback');
 Route::get('/logout', [AuthenticateController::class, 'logout'])->name('handelLogout');
 
