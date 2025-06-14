@@ -9,22 +9,22 @@
         <div class="table-responsive">
             @if($notifications->isEmpty())
                 <div class="text-center">
-                    <img src="{{ asset('assets/admin/images/empty.png') }}" alt="Không tìm thấy kết quả" style="width: 400px;" />
+                    <img src="{{ asset('assets/admin/images/empty.png') }}" alt="Không tìm thấy kết quả" style=" width: 400px;" />
                 </div>
             @else
                 <ul style="list-style: none; cursor: pointer">
                     @foreach($notifications as $notification)
                         <li >
-                            <div class="d-flex notification mt--10 p-4 @if($notification->is_read == 0) noti-isRead @endif" style="z-index: 1">
+                            <div class="d-flex notification mt--10 p-4 @if($notification->pivot->is_read == 0) noti-isRead @endif" style="z-index: 1">
                                 <div wire:click="read({{$notification->id}})" class="d-flex">
                                     <div class="noti-avatar" style="width: 10%;"><img src="{{asset('storage/'.$notification->club->thumbnail)}}" alt="" ></div>
                                     <div class="noti-content ms-4" style="width: 80%;">
-                                        <span class="mb-2 noti-title">{{$notification->title}}</span>
-                                        <span class="noti-cont">{{ $notification->content}}</span>
+                                        <span class="mb-2 noti-title">@if($notification->type=='new_notification_club') {{'Bạn nhận được một thông báo mới từ CLB '.$notification->club->name }}@else {{$notification->title}} @endif</span>
+                                        <span class="noti-cont">@if($notification->type=='new_notification_club') {{$notification->title }}@else {{ $notification->content}}@endif</span>
                                         <span class="noti-date">{{ $notification->created_at->format('H:i d/m/Y') }}</span>
                                     </div>
                                 </div>
-                                @if($notification->is_read == 0)
+                                @if($notification->pivot->is_read == 0)
                                     <div class="isRead">
                                     </div>
                                 @endif
@@ -34,7 +34,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><button class="dropdown-item" wire:click="deleteNoti({{$notification->id}})">Xóa thông báo này </button></li>
-                                        <li><button class="dropdown-item" wire:click="readNoti({{$notification->id}})">Đánh dấu là đã đọc</button></li>
+                                        @if($notification->pivot->is_read == 0)<li><button class="dropdown-item" wire:click="readNoti({{$notification->id}})">Đánh dấu là đã đọc</button></li>@endif
                                     </ul>
                                 </div>
                             </div>

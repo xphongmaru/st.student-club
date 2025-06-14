@@ -10,14 +10,15 @@ class Notification extends Component
     public function render()
     {
         $notifications= null;
+
         if(auth()->check()){
-            $notifications = NotificationModel::query()
-                ->where('user_id', auth()->user()->id)
+            $notifications = auth()->user()->notificationUsers()
                 ->orderBy('created_at', 'desc')
-                ->where('is_read', 0)
+                ->wherePivot('is_read', 0)
                 ->take(3)
                 ->get();
         }
+
         return view('livewire.client.header.notification',[
             'notifications' => $notifications,
         ]);
@@ -30,8 +31,10 @@ class Notification extends Component
             $this->dispatch('flashMessage', type:'warning', message: 'Thông báo không tồn tại');
             return;
         }
-        $notification->is_read = 1;
-        $notification->read_at = now();
+        $notification->notificationUsers()->updateExistingPivot(auth()->user()->id, [
+            'is_read' => true,
+            'read_at' => now(),
+        ]);
         $notification->save();
         return redirect($notification->url);
     }

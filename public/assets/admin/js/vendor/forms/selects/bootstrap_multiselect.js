@@ -410,7 +410,7 @@
             maxHeight: false,
             includeSelectAllOption: false,
             includeSelectAllIfMoreThan: 0,
-            selectAllText: ' Select all',
+            selectAllText: ' Chọn tất cả',
             selectAllValue: 'multiselect-all',
             selectAllName: false,
             selectAllNumber: true,
@@ -421,14 +421,14 @@
             enableClickableOptGroups: false,
             enableCollapsibleOptGroups: false,
             collapseOptGroupsByDefault: false,
-            filterPlaceholder: 'Search',
+            filterPlaceholder: 'Nhập thông tin tìm kiếm ',
             // possible options: 'text', 'value', 'both'
             filterBehavior: 'text',
             includeFilterClearBtn: true,
             preventInputChangeEvent: false,
-            nonSelectedText: 'None selected',
+            nonSelectedText: 'Chưa chọn',
             nSelectedText: 'selected',
-            allSelectedText: 'All selected',
+            allSelectedText: 'Đã chọn tất cả',
             numberDisplayed: 3,
             disableIfEmpty: false,
             disabledText: '',
@@ -440,7 +440,7 @@
             templates: {
                 button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown"><span class="multiselect-selected-text"></span></button>',
                 popupContainer: '<div class="multiselect-container dropdown-menu"></div>',
-                filter: '<div class="multiselect-filter"><div class="form-control-feedback form-control-feedback-left input-group"><input type="text" class="multiselect-search form-control"><div class="form-control-feedback-icon"><i class="ph-magnifying-glass text-muted"></i></div><button type="button" class="btn btn-light btn-icon multiselect-clear-filter"><i class="ph-x"></i></button></div></div>',
+                filter: '<div class="multiselect-filter"><div class="form-control-feedback form-control-feedback-left input-group"><input type="text" class="multiselect-search form-control"><div class="form-control-feedback-icon"></div><button type="button" class="btn btn-light btn-icon multiselect-clear-filter"><i class="ph-x"></i></button></div></div>',
                 option: '<div class="multiselect-item dropdown-item"></div>',
                 divider: '<div class="dropdown-divider"></div>',
                 optionGroup: '<div class="multiselect-item multiselect-group dropdown-item-text"></div>',
@@ -879,11 +879,11 @@
 
         /**
          * Create a checkbox container with input and label based on given values
-         * @param {JQuery} $item 
-         * @param {String} label 
-         * @param {String} name 
-         * @param {String} value 
-         * @param {String} inputType 
+         * @param {JQuery} $item
+         * @param {String} label
+         * @param {String} name
+         * @param {String} value
+         * @param {String} inputType
          * @returns {JQuery}
          */
         createCheckbox: function ($item, label, name, value, title, inputType) {
@@ -1113,7 +1113,7 @@
                     this.$filter = $(this.options.templates.filter);
                     $('input', this.$filter).attr('placeholder', this.options.filterPlaceholder);
 
-                    // Handles optional filter clear button                        
+                    // Handles optional filter clear button
                     if (!this.options.includeFilterClearBtn) {
                         this.$filter.find(".multiselect-search").attr("type", "text");
 
@@ -1636,7 +1636,7 @@
             this.$select.prop('disabled', false);
             this.$button.prop('disabled', false)
                 .removeClass('disabled');
-            
+
             this.updateButtonText();
         },
 
@@ -1647,7 +1647,7 @@
             this.$select.prop('disabled', true);
             this.$button.prop('disabled', true)
                 .addClass('disabled');
-            
+
             this.updateButtonText();
         },
 

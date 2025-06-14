@@ -24,7 +24,7 @@
                         Ảnh đại diện: <span class="text-danger">*</span>
                     </label>
                     <div>
-                        <input wire:model.live="thumbnail" type="file" class="form-control  @error('thumbnail') is-invalid @enderror">
+                        <input wire:model.live="thumbnail" type="file" class="form-control  @error('thumbnail') is-invalid @enderror" accept="image/*">
                         @error('thumbnail')
                         <label class="text-danger mt-1">{{ $message }}</label>
                         @enderror
@@ -40,7 +40,7 @@
                         Ảnh sự kiện: <span class="text-danger">*</span>
                     </label>
                     <div>
-                        <input wire:model.live="photos" type="file" class="form-control  @error('photos') is-invalid @enderror" multiple>
+                        <input wire:model.live="photos" type="file" class="form-control  @error('photos') is-invalid @enderror" multiple accept="image/*">
                         @error('photos')
                         <label class="text-danger mt-1">{{ $message }}</label>
                         @enderror

@@ -7,7 +7,7 @@
 
     setTimeout(function () {
         $(".preloader").fadeOut();
-    }, 1000);
+    }, 3000);
 
     // Khi bất kỳ modal nào mở
     $('.modal').on('show.bs.modal', function () {

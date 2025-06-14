@@ -9168,7 +9168,7 @@ xclip
 }
 
 .popup-mobile-menu .mainmenu li a.active {
-    color: var(--color-primary) !important;
+    /*color: var(--color-primary) !important;*/
 }
 
 .popup-mobile-menu .mainmenu li+li {
@@ -9313,7 +9313,10 @@ xclip
 }
 
 .breadcrumb-inner ul.page-list {
-
+    display: flex;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .breadcrumb-inner ul.page-list li {
@@ -9355,6 +9358,9 @@ xclip
 .breadcrumb-inner ul.page-list li.rainbow-breadcrumb-item.active {
     color: var(--color-dark);
     opacity: 0.8;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .breadcrumb-inner ul.page-list li.rainbow-breadcrumb-item.active::after {

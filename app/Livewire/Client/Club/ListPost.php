@@ -21,20 +21,24 @@ class ListPost extends Component
             // Cập nhật trạng thái bài viết
             $post->update(['status' => StatusPost::published->name]);
 
-            // Gửi thông báo đến tất cả user trong club
+            //tạo thông báo đến thành viên câu lạc bô
+            $notification = Notification::query()->create([
+                'title' => $this->club->name . ' đã có bài viết mới',
+                'content' => $post->title,
+                'type' => 'newPost',
+                'club_id' => $post->club_id,
+                'url' => route('client.club.post-detail', ['id' => $this->club->id, 'slug' => str($post->title)->slug()]),
+            ]);
             $users = $this->club->users;
-            foreach ($users as $user) {
-                Notification::create([
-                    'user_id'  => $user->id,
-                    'title'    => $this->club->name . ' đã có bài viết mới',
-                    'content'  => $post->title,
-                    'type'     => 'newPost',
-                    'club_id'  => $this->club->id,
-                    'status'   => 'pending',
-                    'url'      => route('client.club.post-detail', [
-                        'id'   => $this->club->id,
-                        'slug' => $post->slug,
-                    ]),
+            $followers = $this->club->followers;
+
+            // Hợp nhất danh sách thành viên và người theo dõi, sau đó loại bỏ trùng lặp
+            $uniqueUsers = $users->merge($followers)->unique('id');
+            // Tạo thông báo cho từng người dùng duy nhất
+
+            foreach ($uniqueUsers as $user) {
+                $notification->notificationUsers()->attach($user->id, [
+                    'is_read' => false,
                 ]);
             }
         }

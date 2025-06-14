@@ -21,14 +21,14 @@
         @else
             @foreach($notifications as $notification)
                 <li >
-                    <div class="d-flex notification @if($notification->is_read == 0) noti-isRead @endif" wire:click="read({{$notification->id}})">
+                    <div class="d-flex notification @if($notification->pivot->is_read == 0) noti-isRead @endif" wire:click="read({{$notification->id}})">
                         <div class="noti-avatar"><img src="{{asset('storage/'.$notification->club->thumbnail)}}" alt="" ></div>
                         <div class="noti-content">
-                            <span class="mb-2 noti-title">{{$notification->title}}</span>
-                            <span class="noti-cont">{{ $notification->content}}</span>
+                            <span class="mb-2 noti-title">@if($notification->type=='new_notification_club') {{'Bạn nhận được một thông báo mới từ CLB '.$notification->club->name }}@else {{$notification->title}} @endif</span>
+                            <span class="noti-cont">@if($notification->type=='new_notification_club') {{$notification->title }}@else {{ $notification->content}}@endif</span>
                             <span class="noti-date">{{ $notification->created_at->format('H:i d/m/Y') }}</span>
                         </div>
-                        @if($notification->is_read == 0)
+                        @if($notification->pivot->is_read == 0)
                             <div class="isRead">
                             </div>
                         @endif
