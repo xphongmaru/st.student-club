@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
+            $table->longText('content');
             $table->string('type')->default('info'); // info, success, warning, error
             $table->string('icon')->nullable();
             $table->string('url')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
+//            $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('club_id')->nullable();
             $table->unsignedInteger('sender_id')->nullable();
-            $table->boolean('is_read')->default(false);
-            $table->timestamp('read_at')->nullable();
+//            $table->boolean('is_read')->default(false);
+//            $table->timestamp('read_at')->nullable();
             $table->string('status');
             $table->timestamps();
         });

@@ -29,7 +29,7 @@
                                 <h5 class="mb-3" style="font-weight: 600; font-size: 20px;">{{$event->name}}</h5>
                                 <div class="d-flex align-items-center">
                                     <i style="color: var(--color-vnua);" class="fa fa-calendar"></i>
-                                    <span class="ms-2" style="font-size: 16px; font-weight: 500; display: inline-block">{{\Carbon\Carbon::parse($event->event_date)->format('d-m-Y')}}</span>
+                                    <p class="ms-2 mb-0 " style="font-size: 16px; font-weight: 500; display: inline-block">{{\Carbon\Carbon::parse($event->event_date)->format('d-m-Y')}}</p>
                                 </div>
                                 <p class="mb-3">{{$event->description}}</p>
                             </div>

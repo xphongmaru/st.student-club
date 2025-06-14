@@ -12,14 +12,12 @@ class Notification extends Component
     public $take = 5;
     public function render()
     {
-        $notifications = NotificationModel::query()
-            ->where('user_id', auth()->user()->id)
+        $notifications = auth()->user()->notificationUsers()
             ->orderBy('created_at', 'desc')
             ->take($this->take)
             ->get();
-        $hasNotification = NotificationModel::query()
-            ->where('user_id', auth()->user()->id)
-            ->where('is_read', 0)
+        $hasNotification = auth()->user()->notificationUsers()
+            ->wherePivot('is_read', 0)
             ->count();
         return view('livewire.client.account.notification',[
             'notifications'=>$notifications,
@@ -34,17 +32,17 @@ class Notification extends Component
 
     public function ReadAllNoti()
     {
-        $notifications = NotificationModel::query()
-            ->where('user_id', auth()->user()->id)
-            ->where('is_read', 0)
-            ->update(['is_read' => 1]);
+        $notifications = auth()->user()
+            ->notificationUsers()
+            ->wherePivot('is_read', 0)
+            ->get();
+
+        foreach ($notifications as $notification) {
+            auth()->user()->notificationUsers()->updateExistingPivot($notification->id, ['is_read' => 1]);
+        }
+
         $this->dispatch('flashMessage', type:'success', message: 'Đã đánh dấu tất cả thông báo là đã đọc');
 
-    }
-
-    public function boot()
-    {
-        \Illuminate\Pagination\Paginator::useBootstrap();
     }
 
     public function read($id)
@@ -54,8 +52,10 @@ class Notification extends Component
             $this->dispatch('flashMessage', type:'warning', message: 'Thông báo không tồn tại');
             return;
         }
-        $notification->is_read = 1;
-        $notification->read_at = now();
+        $notification->notificationUsers()->updateExistingPivot(auth()->user()->id, [
+            'is_read' => true,
+            'read_at' => now(),
+        ]);
         $notification->save();
         return redirect($notification->url);
     }
@@ -67,7 +67,7 @@ class Notification extends Component
             $this->dispatch('flashMessage', type:'warning', message: 'Thông báo không tồn tại');
             return;
         }
-        $noti->delete();
+        $noti->notificationUsers()->detach(auth()->user()->id);
         $this->dispatch('flashMessage', type:'success', message: 'Đã xóa thông báo');
     }
 
@@ -78,8 +78,10 @@ class Notification extends Component
             $this->dispatch('flashMessage', type:'warning', message: 'Thông báo không tồn tại');
             return;
         }
-        $notification->is_read = 1;
-        $notification->read_at = now();
+        $notification->notificationUsers()->updateExistingPivot(auth()->user()->id, [
+            'is_read' => true,
+            'read_at' => now(),
+        ]);
         $notification->save();
     }
 }

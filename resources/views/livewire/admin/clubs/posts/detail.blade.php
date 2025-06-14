@@ -25,8 +25,9 @@
 
             <!-- Search -->
             <div class="card" style="width: 80%;">
-                <div class="sidebar-section-header border-bottom">
+                <div class="sidebar-section-header border-bottom d-flex justify-content-between align-items-center">
                     <span class="fw-semibold">Thông tin bài viết </span>
+                    <a href="{{ route('admin.club.post-index',['id'=>$club_id]) }}" type="button" class=""><i class="ph-arrow-bend-down-left"></i> Trở lại</a>
                 </div>
 
                 <div class="sidebar-section-body px-2">

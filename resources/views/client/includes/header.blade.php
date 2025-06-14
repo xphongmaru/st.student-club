@@ -13,12 +13,12 @@
                     <nav class="mainmenu-nav d-none d-lg-block">
                         <ul class="mainmenu">
                             <li><a href="{{route('client.index')}}">Trang chủ</a></li>
-                            <li><a href="#">Hoạt động</a></li>
+{{--                            <li><a href="#">Hoạt động</a></li>--}}
                             <li class="has-droupdown has-menu-child-item"><a href="@if(Auth()->check()) {{route('client.account',['item'=>2])}} @else {{route('sso.redirect')}}  @endif">Thông báo</a>
                                 <livewire:client.header.notification/>
                             </li>
                             <li><a href="{{route('client.post')}}">Bài viết</a></li>
-                            <li><a href="#">Liên hệ</a></li>
+{{--                            <li><a href="#">Liên hệ</a></li>--}}
                         </ul>
                     </nav>
                 </div>
@@ -102,7 +102,7 @@
     <div class="inner">
         <div class="header-top">
             <div class="logo">
-                <a href="">
+                <a href="{{route('client.index')}}">
                     <img class="logo-light" src="{{asset('assets\admin\images\logo_vnua.png')}}" alt="Corporate Logo">
                     <img class="logo-dark" src="{{asset('assets\admin\images\logo_vnua.png')}}" alt="Corporate Logo">
                 </a>
@@ -115,10 +115,12 @@
         </div>
         <ul class="mainmenu">
             <li><a href="{{route('client.index')}}">Trang chủ</a></li>
-            <li><a href="">Hoạt động</a></li>
-            <li><a href="">Thông báo</a></li>
-            <li><a href="">Bài viết</a></li>
-            <li><a href="">Liên hệ</a></li>
+{{--            <li><a href="">Hoạt động</a></li>--}}
+            <li>
+                <a href="@if(Auth()->check()) {{route('client.account',['item'=>2])}} @else {{route('sso.redirect')}}  @endif">Thông báo</a>
+            </li>
+            <li><a href="{{route('client.post')}}">Bài viết</a></li>
+{{--            <li><a href="">Liên hệ</a></li>--}}
         </ul>
     </div>
 </div>

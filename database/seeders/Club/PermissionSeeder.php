@@ -64,5 +64,12 @@ class PermissionSeeder extends Seeder
                 'created_at' => now(),
             ]);
         }
+
+        if (!DB::table('permission_clubs')->where('name', 'Quản lý thông báo')->exists()) {
+            DB::table('permission_clubs')->insert([
+                'name' => 'Quản lý thông báo',
+                'created_at' => now(),
+            ]);
+        }
     }
 }

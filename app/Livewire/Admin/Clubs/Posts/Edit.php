@@ -161,16 +161,25 @@ class Edit extends Component
             $club = Club::query()->where('id', $this->club_id)->first();
             $club->posts_count++;
             $club->save();
-            $users=$club->users;
-            foreach ($users as $user){
-                Notification::query()->create([
-                    'user_id'=>$user->id,
-                    'title'=> $club->name.' đã có bài viết mới',
-                    'content'=>$this->title,
-                    'type'=>'newPost',
-                    'club_id'=>$this->club_id,
-                    'status'=>'pending',
-                    'url'=> route('client.club.post-detail',['id'=>$this->club_id, 'slug'=>str($this->title)->slug()]),
+
+            //tạo thông báo đến thành viên câu lạc bô
+            $notification = Notification::query()->create([
+                'title' => $club->name . ' đã có bài viết mới',
+                'content' => $this->title,
+                'type' => 'newPost',
+                'club_id' => $this->club_id,
+                'url' => route('client.club.post-detail', ['id' => $this->club_id, 'slug' => str($this->title)->slug()]),
+            ]);
+            $users = $club->users;
+            $followers = $club->followers;
+
+            // Hợp nhất danh sách thành viên và người theo dõi, sau đó loại bỏ trùng lặp
+            $uniqueUsers = $users->merge($followers)->unique('id');
+            // Tạo thông báo cho từng người dùng duy nhất
+
+            foreach ($uniqueUsers as $user) {
+                $notification->notificationUsers()->attach($user->id, [
+                    'is_read' => false,
                 ]);
             }
         }

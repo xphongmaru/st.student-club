@@ -1,0 +1,339 @@
+@section('script')
+    <script>
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .ck-content img {
+                height: auto;
+                display: block;
+            }
+        `;
+        document.head.appendChild(style);
+        function ImageResponsivePlugin(editor) {
+            editor.conversion.for('downcast').add(dispatcher => {
+                dispatcher.on('insert:image', (evt, data, conversionApi) => {
+                    const viewWriter = conversionApi.writer;
+                    const figure = conversionApi.mapper.toViewElement(data.item);
+                    const imageElement = figure.getChild(0);
+
+                    viewWriter.setAttribute('class', 'img-responsive', imageElement);
+                    viewWriter.removeAttribute('style', imageElement);
+                });
+            });
+        }
+
+        const CKEditorDocument = function() {
+            // Document editor
+            const _componentCKEditorDocument = function() {
+                if (typeof DecoupledEditor == 'undefined') {
+                    console.warn('Warning - ckeditor_document.js is not loaded.');
+                    return;
+                }
+
+                // Basic example
+                DecoupledEditor.create(document.querySelector('#document_editor_basic .document-editor-editable'), {
+                    extraPlugins: [ImageResponsivePlugin],
+                    simpleUpload: {
+                        // Chỉ sử dụng một cấu hình upload
+                        uploadUrl: '{{ route("admin.post.upload") }}',
+                        withCredentials: true,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    },
+                    image: {
+                        resizeOptions: [
+                            { name: 'resizeImage:original', value: null, label: 'Original' },
+                            { name: 'resizeImage:50',     value: '100',  label: '100px' },
+                            { name: 'resizeImage:100',    value: '200',  label: '200px' },
+                            { name: 'resizeImage:150',    value: '300',  label: '300px' },
+                            { name: 'resizeImage:200',    value: '400',  label: '400px' },
+                            { name: 'resizeImage:250',    value: '500',  label: '500px' },
+                            { name: 'resizeImage:300',    value: '600',  label: '600px' },
+                            { name: 'resizeImage:350',    value: '700',  label: '700px' },
+                            { name: 'resizeImage:400',    value: '800',  label: '800px' },
+                            { name: 'resizeImage:450',    value: '900',  label: '900px' },
+                            { name: 'resizeImage:500',    value: '1000', label: '1000px' }
+                        ],
+                        toolbar: [
+                            'imageStyle:inline',
+                            'imageStyle:block',
+                            'imageStyle:side',
+                            '|',
+                            'toggleImageCaption',
+                            'imageTextAlternative',
+                            '|',
+                            'resizeImage',
+                        ]
+                    },
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                            { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                            { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                            { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                        ]
+                    },
+                    fontSize: {
+                        options: [
+                            '10px',
+                            '11px',
+                            '12px',
+                            '13px',
+                            '14px',
+                            '15px',
+                            '16px',
+                            '17px',
+                            '18px',
+                            '19px',
+                            '20px',
+                            '21px',
+                            '22px',
+                            '23px',
+                            '24px',
+                            '25px',
+                            '26px',
+                            '27px',
+                            '28px',
+                            '29px',
+                            '30px',
+                            '36px',
+                            '38px',
+                            '40px',
+                            '42px',
+                            '44px',
+                            '46px',
+                            '48px',
+                            '50px',
+                            '52px',
+                            '54px',
+                            '56px',
+                            '58px',
+                            '60px',
+                            '62px',
+                            '64px',
+                            '66px',
+                            '68px',
+                            '70px',
+                            '72px',
+                        ],
+                        supportAllValues: true
+                    },
+                }).then(editor => {
+                    // Add custom upload adapter if needed
+                    editor.plugins.get('FileRepository').createUploadAdapter = loader => {
+                        return {
+                            upload: () => {
+                                return loader.file.then(file => {
+                                    const formData = new FormData();
+                                    formData.append('upload', file);
+
+                                    return fetch('{{ route("admin.post.upload") }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: formData
+                                    })
+                                        .then(response => response.json())
+                                        .then(response => {
+                                            if (!response.uploaded) {
+                                                throw response.error.message;
+                                            }
+                                            return {
+                                                default: response.url
+                                            };
+                                        });
+                                });
+                            },
+                            abort: () => {
+                                console.log('Upload aborted');
+                            }
+                        };
+                    };
+                    window.editor = editor;
+                    // Push về Livewire
+                    editor.model.document.on('change:data', () => {
+                    @this.set('content', editor.getData());
+                    });
+
+                    // Nhận dữ liệu từ Livewire (nếu cần)
+                    Livewire.on('contentUpdated', content => {
+                        if (content !== null && content !== undefined) {
+                            editor.setData(content);
+                        }
+                    });
+                    const toolbarContainer = document.querySelector('#document_editor_basic .document-editor-toolbar');
+                    toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            };
+            return {
+                init: function() {
+                    _componentCKEditorDocument();
+                }
+            }
+        }();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            CKEditorDocument.init();
+        });
+
+    </script>
+
+@endsection
+@section('style_custom')
+    <style>
+        /* Giới hạn dropdown chiều cao và thêm thanh cuộn */
+        .ck-dropdown__panel .ck-list {
+            max-height: 200px; /* Hoặc 150px tùy bạn */
+            overflow-y: auto;
+        }
+    </style>
+@endsection
+<div class="row">
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header bold">
+                <i class="ph-info"></i>
+                Thông tin bài viết
+            </div>
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label">
+                        Tiêu đề: <span class="text-danger">*</span>
+                    </label>
+                    <div>
+                        <input wire:model.live="title" type="text" placeholder="Nhập vào tiêu đề thông báo" class="form-control  @error('title') is-invalid @enderror">
+                        @error('title')
+                        <label class="text-danger mt-1">{{ $message }}</label>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group mt-2" wire:ignore>
+                    <label class="form-label">
+                        Thành viên nhận thông báo: <span class="text-danger">*</span>
+                    </label>
+                    <div class="">
+                        <select wire:model.live="selectUser" id="selectUser" class="form-control multiselect" multiple="multiple" data-include-select-all-option="true" data-enable-filtering="true" data-enable-case-insensitive-filtering="true" data-enable-clickable-opt-groups="true">
+                            @foreach($roles as $role)
+                                @php($users = $role->user()->get())
+                                <optgroup label="{{$role->name}}">
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}"  @if(in_array($user->id, $selectUser)) selected @endif>
+                                            {{$user->full_name}}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label class="form-label">
+                        Nội dung bài viết: <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="document-editor" id="document_editor_basic" wire:ignore>
+                        <div class="document-editor-toolbar"></div>
+                        <div class="document-editor-container">
+                            <div class="document-editor-editable" style="width: 100%;">
+                                {!! $content !!}
+                            </div>
+                        </div>
+                    </div>
+                    @error('content')
+                    <label class="text-danger mt-1">{{ $message }}</label>
+                    @enderror
+                </div>
+
+                <div class="form-group mt-2">
+                    <label class="form-label">
+                        Đính kèm tệp: <span class="text-danger">*</span>
+                    </label>
+                    <div>
+                        <input wire:model.live="attachments" type="file" class="form-control  @error('attachments') is-invalid @enderror" multiple accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application">
+                        @foreach ($errors->get('attachments.*') as $messages)
+                            @foreach ($messages as $message)
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @endforeach
+                        @endforeach
+                        @error('attachments')
+                        <label class="text-danger mt-1">{{ $message }}</label>
+                        @enderror
+                    </div>
+                    <div class="mt-2">
+                        <div class="row mt-3">
+                            @if ($attachments)
+                                    @foreach ($attachments as $index => $attachment)
+                                        <div class="col-md-6 mb-3">
+                                            <div class="border rounded p-2 text-center">
+                                                @if (str_starts_with($attachment->getMimeType(), 'image/'))
+                                                    <img src="{{ $attachment->temporaryUrl() }}"
+                                                         class="img-thumbnail mb-2"
+                                                         style="height: 160px; object-fit: cover; width: 100%;" alt="Ảnh đính kèm">
+                                                @else
+                                                    {{-- Hiển thị thông tin file không phải ảnh --}}
+                                                    <div class="mb-2">
+                                                        <i class="ph-file text-secondary" style="font-size: 2rem;"></i>
+                                                        <div><strong>{{ $attachment->getClientOriginalName() }}</strong></div>
+                                                    </div>
+                                                @endif
+
+                                                <button wire:click="removeAttachment({{ $index }})"
+                                                        class="btn btn-danger btn-sm mt-2">
+                                                    <i class="ph-trash"></i> Xóa
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                            @endif
+                                @if($oldAttachments)
+                                    @foreach($oldAttachments as $file)
+                                        <div class="col-md-6 mb-3">
+                                            <div class="border rounded p-2 text-center">
+                                                {{-- Hiển thị thông tin file không phải ảnh --}}
+                                                <div class="mb-2">
+                                                    <i class="ph-file text-secondary" style="font-size: 2rem;"></i>
+                                                    <div><strong>{{ $file['name'] }}</strong></div>
+                                                </div>
+
+                                                <button wire:click="removeOldAttachment({{ $file['id'] }})"
+                                                        class="btn btn-danger btn-sm mt-2">
+                                                    <i class="ph-trash"></i> Xóa
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bold">
+                <i class="ph-gear-six"></i>
+                Hành động
+            </div>
+            <div class="card-body d-flex flex-wrap align-items-center gap-1">
+                <button wire:click="update" class="btn btn-primary" type="submit"><i class="ph-floppy-disk"></i>Lưu</button>
+                <a href="{{ route('admin.club.notification-index',['id'=>$club_id]) }}" type="button" class="btn btn-warning"><i class="ph-arrow-counter-clockwise"></i> Trở lại</a>
+            </div>
+            <div class="card-body d-flex align-items-center gap-1" style="padding-top: 0">
+            </div>
+        </div>
+    </div>
+</div>

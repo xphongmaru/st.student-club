@@ -81,7 +81,7 @@
 
                 <div class="card-body">
                     <div class="chart-container">
-                        <div class="chart has-fixed-height" id="tornado_negative_stack">
+                        <div class="chart" id="tornado_negative_stack">
                             <div class="row">
                                 <div class="col-sm-6 col-xl-4">
                                     <div class="card card-body">

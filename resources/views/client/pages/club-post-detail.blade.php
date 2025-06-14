@@ -14,8 +14,9 @@
                             <li class="rainbow-breadcrumb-item"><a href="{{route('client.index')}}">Trang chủ</a></li>
                             <li class="rainbow-breadcrumb-item"><a href="{{route('client.page-club',['id'=>$club->id])}}">{{$club->name}}</a></li>
                             <li class="rainbow-breadcrumb-item"><a href="{{route('client.club.post',['id'=>$club->id])}}">Bài viết</a></li>
-                            <li class="rainbow-breadcrumb-item active">{{$post->title}}</li>
+                            <li class="rainbow-breadcrumb-item active" style=" overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;">{{$post->title}}</li>
                         </ul>
+
                     </div>
                 </div>
             </div>

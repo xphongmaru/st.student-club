@@ -5,7 +5,7 @@
         <div class="page-header-content d-lg-flex">
             <div class="d-flex">
                 <h4 class="page-title mb-0">
-                    Thông tin chi tiết bài viết CLB
+                    Thông báo của Câu lạc bộ
                 </h4>
             </div>
 
@@ -16,8 +16,7 @@
                 <div class="breadcrumb py-2">
                     <a href="{{route('admin.dashboard')}}" class="breadcrumb-item"><i class="ph-house"></i></a>
                     <a href="#" class="breadcrumb-item active">Câu lạc bộ</a>
-                    <a href="{{route('admin.club.post-index',['id'=>$club_id])}}" class="breadcrumb-item active">Danh sách bài viết</a>
-                    <span class="breadcrumb-item active"> Thông tin chi tiết bài viết </span>
+                    <span class="breadcrumb-item active">Danh sách thông báo </span>
                 </div>
             </div>
 
@@ -28,7 +27,9 @@
 @section('page-content')
     <div class="content">
         <!-- Content -->
-        <livewire:admin.clubs.posts.detail :club_id="$club_id" :post_id="$post_id"/>
+        <livewire:admin.clubs.notifications.index :club_id="$club_id"/>
         <!-- /Content -->
     </div>
 @endsection
+
+

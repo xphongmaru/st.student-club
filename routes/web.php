@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Clubs\ClubController;
 use App\Http\Controllers\Admin\Clubs\MemberController;
+use App\Http\Controllers\Admin\Clubs\NotificationController;
 use App\Http\Controllers\Admin\Clubs\PostController;
 use App\Http\Controllers\Admin\Clubs\RecruitmentMemberController;
 use App\Http\Controllers\Admin\Clubs\RequestClubController;
@@ -10,14 +11,15 @@ use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\CategoryPostController;
 use App\Http\Controllers\Client\Club\ClientPostController;
 use App\Http\Controllers\Client\Club\PageIndexController;
+use App\Http\Controllers\Client\NotiCationController;
 use App\Http\Controllers\EventController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 //route đăng nhâp sso
 //Route::get('/auth/redirect', [AuthenticateController::class, 'redirectToSSO'])->name('sso.redirect');
-Route::get('/auth/redirect', function (){
-    $user = User::query()->where('id',1
+    Route::get('/auth/redirect', function (){
+    $user = User::query()->where('id',3
     )->firstOrFail();
     Auth::login($user);
 })->name('sso.redirect');
@@ -35,7 +37,7 @@ Route::middleware('auth.sso')->group(function () {
             'item' => $item,
         ]);
     })->name('client.account');
-
+    Route::get('/thong-bao/{notification_id}', [NotiCationController::class, 'notificationDetail'])->name('client.notification-detail');
 });
 Route::get('/bai-viet', [ClientPostController::class, 'index'])->name('client.post');
 
@@ -106,6 +108,13 @@ Route::middleware('auth.sso')->group(function () {
             Route::get('/club/{id}/event/create', [EventController::class, 'create'])->name('admin.club.event-create');
             Route::get('/club/{id}/event/edit/{event_id}', [EventController::class, 'edit'])->name('admin.club.event-edit');
             Route::get('/club/{id}/event/{event_id}', [EventController::class, 'detail'])->name('admin.club.event-detail');
+        });
+
+        Route::middleware('permission.club:Quản lý thông báo')->group(function () {
+            Route::get('/club/{id}/notification', [NotificationController::class, 'index'])->name('admin.club.notification-index');
+            Route::get('/club/{id}/notification/create', [NotificationController::class, 'create'])->name('admin.club.notification-create');
+            Route::get('/club/{id}/notification/edit/{notification_id}', [NotificationController::class, 'edit'])->name('admin.club.notification-edit');
+            Route::get('/club/{id}/notification/{notification_id}', [NotificationController::class, 'detail'])->name('admin.club.notification-detail');
         });
 
 

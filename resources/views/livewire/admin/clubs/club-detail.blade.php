@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label class="form-label">
                         <span class="fw-bold">Số sự kiện:</span>
-                        <span>{{$club->evens_count!=null?$club->evens_count:"0"}}</span>
+                        <span>{{$club->events_count!=null?$club->events_count:"0"}}</span>
                     </label>
                 </div>
                 <div class="form-group">

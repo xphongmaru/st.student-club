@@ -16,8 +16,8 @@
                 <div class="breadcrumb py-2">
                     <a href="{{route('admin.dashboard')}}" class="breadcrumb-item"><i class="ph-house"></i></a>
                     <a href="#" class="breadcrumb-item active">Câu lạc bộ</a>
-                    <a href="{{route('admin.club.post-index',['id'=>$club_id])}}" class="breadcrumb-item active">Danh sách bài viết</a>
-                    <span class="breadcrumb-item active"> Thông tin chi tiết bài viết </span>
+                    <a href="{{route('admin.club.notification-index',['id'=>$club_id])}}" class="breadcrumb-item active">Danh sách thông báo</a>
+                    <span class="breadcrumb-item active"> Thông tin chi tiết thông báo </span>
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
 @section('page-content')
     <div class="content">
         <!-- Content -->
-        <livewire:admin.clubs.posts.detail :club_id="$club_id" :post_id="$post_id"/>
+        <livewire:admin.clubs.notifications.detail :club_id="$club_id" :notification_id="$notification_id"/>
         <!-- /Content -->
     </div>
 @endsection
