@@ -48,6 +48,11 @@ class ModalInviteMember extends Component
             $this->dispatch('flashMessage',type:'warning', message: 'Người dùng không tồn tại');
             return;
         }
+        //kiểm tra người dùng đã là thành viên của câu lạc bộ chưa
+        if($club->users()->where('user_id', $user->id)->exists()){
+            $this->dispatch('flashMessage',type:'warning', message: 'Người dùng đã là thành viên của câu lạc bộ');
+            return;
+        }
         if($club->clubInviteUsers()->where('user_id', $user->id)->exists()){
             if($club->clubInviteUsers()->where('user_id', $user->id)->first()->pivot->status == StatusRequestClub::Rejected->value){
                 $this->dispatch('openModel' ,type:'warning' , title: 'Lời mời đã bị từ chối', text: 'Bạn có muốn gửi lại lời mời đến người dùng này không?', confirmEvent: 'resendInvite');
@@ -69,17 +74,22 @@ class ModalInviteMember extends Component
         ]);
 
         //gửi thông báo đến người dùng
-        Notification::create([
-            'user_id' => $user->id,
+        $notification = Notification::create([
+//            'user_id' => $user->id,
             'club_id' => $club->id,
             'title' => 'Bạn đã nhận được lời mời tham gia câu lạc bộ '.$club->name,
             'type' => 'invite',
             'content' => $this->content,
             'status' => StatusRequestClub::Approved,
-            'is_read' => false,
+//            'is_read' => false,
             'url' => route('client.account',['item'=>5]),
             'created_at' => now(),
         ]);
+        //gửi thông báo đến người dùng
+        $notification->notificationUsers()->attach($user, [
+            'is_read' => false,
+        ]);
+
         $this->content='Chúng tôi rất vui được mời bạn tham gia Câu lạc bộ';
         $this->dispatch('flashMessage',type:'success', message: 'Đã gửi lời mời thành công');
     }
@@ -95,16 +105,19 @@ class ModalInviteMember extends Component
             'created_at' => now(),
         ]);
         //gửi thông báo đến người dùng
-        Notification::create([
-            'user_id' => $user->id,
+        $notification = Notification::create([
+//            'user_id' => $user->id,
             'club_id' => $club->id,
             'title' => 'Bạn đã nhận được lời mời tham gia câu lạc bộ '.$club->name,
             'type' => 'invite',
             'content' => $this->content,
             'status' => StatusRequestClub::Approved,
-            'is_read' => false,
+//            'is_read' => false,
             'url' => route('client.account',['item'=>5]),
             'created_at' => now(),
+        ]);
+        $notification->notificationUsers()->attach($user, [
+            'is_read' => false,
         ]);
         $this->content='Chúng tôi rất vui được mời bạn tham gia Câu lạc bộ';
         $this->dispatch('flashMessage',type:'success', message: 'Đã gửi lại lời mời thành công');

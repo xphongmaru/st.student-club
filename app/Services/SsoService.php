@@ -26,7 +26,7 @@ class SsoService
     public function get(string $endPoint, $data = [])
     {
         try {
-            $response = Http::withToken($this->accessToken)->get(config('auth.sso.uri') . $endPoint, $data);
+            $response = Http::withToken($this->accessToken)->get(config('auth.sso.ip') . $endPoint, $data);
 
             dd($response->json());
         } catch (Throwable $th) {
