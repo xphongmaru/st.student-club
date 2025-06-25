@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
            'auth.sso' => \App\Http\Middleware\AutheticateSSO::class,
             'permission' => \App\Http\Middleware\CheckRolePermission::class,
             'permission.club' => \App\Http\Middleware\CheckRoleClub::class,
-        ]);
+        ])->trustProxies('*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

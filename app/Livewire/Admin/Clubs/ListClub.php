@@ -46,6 +46,15 @@ class ListClub extends Component
             $this->dispatch('flashMessage', type: 'warning', message: 'Bạn đang quản lý câu lạc bộ này rồi!');
         }
         else{
+            $club = Club::query()->where('id', $this->club_id)->first();
+        if (!$club) {
+            $this->dispatch('flashMessage', type: 'error', message: 'Câu lạc bộ không tồn tại');
+            return;
+        }
+        elseif($club->status != 'active') {
+            $this->dispatch('flashMessage', type: 'error', message: 'Câu lạc bộ đã bị ngừng hoạt động. Vui lòng liên hệ quản trị viên để biết thêm chi tiết.');
+            return;
+        }
             session()->put('club_id', $this->club_id);
             session()->flash( 'success','Chuyển đổi quản lý câu lạc bộ thành công!');
             return redirect(route('admin.dashboard'));
